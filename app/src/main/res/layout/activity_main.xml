@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="154dp"
+        android:layout_height="359dp"
+        android:layout_marginStart="28dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccueil"
+        app:layout_constraintVertical_bias="0.215">
+
+        <Button
+            android:id="@+id/btnJeu1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jeu 1" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewAccueil"
+        android:layout_width="213dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:text="Accueil"
+        android:textAlignment="center"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnDuel"
+        android:layout_width="169dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="492dp"
+        android:text="Duel"
+        android:textAlignment="gravity"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccueil" />
+
+    <Button
+        android:id="@+id/btnHistorique"
+        android:layout_width="202dp"
+        android:layout_height="47dp"
+        android:text="Historique"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDuel"
+        app:layout_constraintVertical_bias="0.37" />
+
+    <LinearLayout
+        android:layout_width="154dp"
+        android:layout_height="359dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccueil"
+        app:layout_constraintVertical_bias="0.215">
+
+        <Button
+            android:id="@+id/btnJeu2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jeu 2" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
