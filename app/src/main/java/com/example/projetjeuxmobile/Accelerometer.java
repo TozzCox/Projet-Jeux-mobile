@@ -30,6 +30,7 @@ public class Accelerometer extends View implements SensorEventListener {
     private int holeX;
     private int holeY;
     private Random rdm = new Random();
+    private int score = 0;
 
     public Accelerometer(Context context) {
         super(context);
@@ -54,8 +55,8 @@ public class Accelerometer extends View implements SensorEventListener {
         holeHeight = holeBitmap.getHeight();
         holeWidth = holeBitmap.getWidth();
 
-        this.holeX = rdm.nextInt(getWidth()); //génère un nombre aléatoire entre 0 et 1080
-        this.holeY = rdm.nextInt(getHeight()); //génère un nombre aléatoire entre 0 et 2340
+        this.holeX = rdm.nextInt(getWidth()-holeWidth); //génère un nombre aléatoire entre 0 et 1080
+        this.holeY = rdm.nextInt(getHeight()-holeHeight); //génère un nombre aléatoire entre 0 et 2340
     }
 
     @Override
@@ -63,6 +64,7 @@ public class Accelerometer extends View implements SensorEventListener {
         super.onDraw(canvas);
         canvas.drawBitmap(ballBitmap, currentX, currentY, paint);
         canvas.drawBitmap(holeBitmap, holeX, holeY, paint);
+        canvas.drawText("Score : "+ score, 300, 300, paint);
     }
 
     @Override
@@ -93,14 +95,20 @@ public class Accelerometer extends View implements SensorEventListener {
         }else if (this.currentY + ballHeight > getHeight() ) {
             currentY = getHeight() - ballHeight;
         }
-        //Log.d("BALISE","x :" + holeX + " y :" + holeY + "\ncurrentX :" + currentX + " y :" + currentY);
+
+        //La balle est dans le trou
         //le +29 et +36 correspondent au décalage entre les coordonnées de la balle et du trou
         if (currentX >= holeX+29-30 && currentX <= holeX+29+30 && currentY <= holeY+36+30 && currentY >= holeY+36-30){
-            this.holeX = rdm.nextInt(getWidth());
-            this.holeY = rdm.nextInt(getHeight());
+            this.holeX = rdm.nextInt(getWidth()-holeWidth);
+            this.holeY = rdm.nextInt(getHeight()-holeHeight);
+            score+=1;
         }
 
-        //rafraishissement de l'écran
+        //rafraichissement de l'écran
         this.invalidate();
     }
+
+    public int getScore(){
+        return score;
+    };
 }

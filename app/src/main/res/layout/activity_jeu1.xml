@@ -16,8 +16,9 @@
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:translationX="350sp"
-        android:translationY="15sp" />
+        android:text="score"
+        android:textColor="@color/purple_200"
+        android:translationX="270sp"
+        android:translationY="25sp" />
 
 </RelativeLayout>
