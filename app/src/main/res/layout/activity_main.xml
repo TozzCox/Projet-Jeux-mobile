@@ -8,20 +8,35 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="154dp"
-        android:layout_height="359dp"
-        android:layout_marginStart="28dp"
+        android:layout_width="169dp"
+        android:layout_height="153dp"
+        android:layout_marginStart="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewAccueil"
-        app:layout_constraintVertical_bias="0.215">
+        app:layout_constraintVertical_bias="0.217">
 
         <Button
             android:id="@+id/btnJeu1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Jeu 1" />
+            android:text="Jeu 1"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnJeu3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jeu 3"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnJeu5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jeu 5"
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <TextView
@@ -31,6 +46,7 @@
         android:layout_marginTop="60dp"
         android:text="Accueil"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,9 +56,10 @@
         android:id="@+id/btnDuel"
         android:layout_width="169dp"
         android:layout_height="94dp"
-        android:layout_marginTop="492dp"
+        android:layout_marginTop="328dp"
         android:text="Duel"
         android:textAlignment="gravity"
+        android:textColor="@color/black"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,32 +68,50 @@
 
     <Button
         android:id="@+id/btnHistorique"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="202dp"
         android:layout_height="47dp"
         android:text="Historique"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDuel"
-        app:layout_constraintVertical_bias="0.37" />
+        app:layout_constraintVertical_bias="0.28" />
 
     <LinearLayout
-        android:layout_width="154dp"
-        android:layout_height="359dp"
+        android:layout_width="169dp"
+        android:layout_height="155dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.692"
         app:layout_constraintStart_toEndOf="@+id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/textViewAccueil"
-        app:layout_constraintVertical_bias="0.215">
+        app:layout_constraintVertical_bias="0.219">
 
         <Button
             android:id="@+id/btnJeu2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Jeu 2" />
+            android:text="Jeu 2"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnJeu4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jeu 4"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnJeu6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jeu 6"
+            android:textColor="@color/black" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
