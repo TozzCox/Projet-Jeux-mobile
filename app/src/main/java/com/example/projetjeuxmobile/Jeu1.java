@@ -2,19 +2,19 @@ package com.example.projetjeuxmobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.widget.ImageView;
+import android.os.CountDownTimer;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Jeu1 extends AppCompatActivity implements SensorEventListener{
+public class Jeu1 extends AppCompatActivity{
 
     private SensorManager sensorManager = null;
     private Accelerometer image;
-    private TextView score;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class Jeu1 extends AppCompatActivity implements SensorEventListener{
 
         image = (Accelerometer) findViewById(R.id.ball);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        score = findViewById(R.id.scoreText);
+        timer();
     }
 
     @Override
@@ -38,12 +38,18 @@ public class Jeu1 extends AppCompatActivity implements SensorEventListener{
         sensorManager.unregisterListener(image);
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        score.setText(image.getScore());
+    private void timer() {
+        countDownTimer = new CountDownTimer(20000, 1000) {
+            @Override
+            public void onTick(long l) {}
+
+            @Override
+            public void onFinish() {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        }.start();
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) { }
 
 }

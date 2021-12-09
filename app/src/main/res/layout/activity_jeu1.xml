@@ -12,13 +12,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/scoreText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="score"
-        android:textColor="@color/purple_200"
-        android:translationX="270sp"
-        android:translationY="25sp" />
-
 </RelativeLayout>

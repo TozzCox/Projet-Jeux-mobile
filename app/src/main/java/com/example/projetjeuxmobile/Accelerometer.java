@@ -1,6 +1,7 @@
 package com.example.projetjeuxmobile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,16 +9,18 @@ import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
 public class Accelerometer extends View implements SensorEventListener {
 
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint paintScore = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Bitmap ballBitmap;
     private Bitmap holeBitmap;
 
@@ -31,6 +34,9 @@ public class Accelerometer extends View implements SensorEventListener {
     private int holeY;
     private Random rdm = new Random();
     private int score = 0;
+
+    private CountDownTimer countDownTimer;
+    String time = "0";
 
     public Accelerometer(Context context) {
         super(context);
@@ -57,6 +63,23 @@ public class Accelerometer extends View implements SensorEventListener {
 
         this.holeX = rdm.nextInt(getWidth()-holeWidth); //génère un nombre aléatoire entre 0 et 1080
         this.holeY = rdm.nextInt(getHeight()-holeHeight); //génère un nombre aléatoire entre 0 et 2340
+
+        //lancer le chrono qu'une seule fois
+        countDownTimer = new CountDownTimer(20000, 1000) {
+            @Override
+            public void onTick(long l) {
+                if(l/1000>=10){
+                    time = "00:" + l/1000;
+                }else{
+                    time = "00:0" + l/1000;
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(getContext(), "Votre score : " + score, Toast.LENGTH_LONG).show();
+            }
+        }.start();
     }
 
     @Override
@@ -64,7 +87,11 @@ public class Accelerometer extends View implements SensorEventListener {
         super.onDraw(canvas);
         canvas.drawBitmap(ballBitmap, currentX, currentY, paint);
         canvas.drawBitmap(holeBitmap, holeX, holeY, paint);
-        canvas.drawText("Score : "+ score, 300, 300, paint);
+
+        paintScore.setTextSize(70);
+        paintScore.setARGB(255, 127, 0, 255);
+        canvas.drawText("Score : "+ score, 700, 120, paintScore);
+        canvas.drawText(time, 300, 120, paintScore);
     }
 
     @Override
@@ -110,5 +137,6 @@ public class Accelerometer extends View implements SensorEventListener {
 
     public int getScore(){
         return score;
-    };
+    }
+
 }

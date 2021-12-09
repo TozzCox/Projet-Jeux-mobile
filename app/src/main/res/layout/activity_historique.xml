@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Historique">
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="33dp"
+        tools:layout_editor_absoluteY="109dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jeu 1 :"
+            android:textColor="#9C27B0"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/myRecord"
+            android:layout_width="127dp"
+            android:layout_height="match_parent"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="#9C27B0"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/opponentRecord"
+            android:layout_width="127dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="#9C27B0"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="103dp"
+        android:layout_height="18dp"
+        android:text="Record personnel"
+        android:textColor="#9C27B0"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="105dp"
+        tools:layout_editor_absoluteY="77dp" />
+
+    <TextView
+        android:layout_width="79dp"
+        android:layout_height="18dp"
+        android:text="Record tous"
+        android:textColor="#9C27B0"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="273dp"
+        tools:layout_editor_absoluteY="66dp" />
+
+    <TextView
+        android:layout_width="131dp"
+        android:layout_height="23dp"
+        android:text="adversaires confondus"
+        android:textColor="#9C27B0"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="246dp"
+        tools:layout_editor_absoluteY="86dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
