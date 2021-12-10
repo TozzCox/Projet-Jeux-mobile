@@ -15,4 +15,4 @@ l'application installée sur les deux telephone auront une meme base de données
 chaque x secondes le host et le client partageront leurs srcores mutuellement l'un à l'autre pour avoir chacun le scrore de l'autre.
 
 Jeu 5 tactile :
-je m'en rappelle plus
+Deja fait 
