@@ -5,41 +5,52 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 public class Historique extends AppCompatActivity {
-
-    private Accelerometer recupScore;
-    private TextView myScore;
-    private TextView opponentRecord;
-    private ArrayList<Integer> listScore = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historique);
-
-        myScore = findViewById(R.id.myRecord);
-        opponentRecord = findViewById(R.id.opponentRecord);
-        int score = recupScore.getScore();
-
-        if(listScore.isEmpty()){
-            //la liste est vide
-            listScore.add(score);//mon record
-            listScore.add(score);//tous records confondus
-            myScore.setText(score);
-            opponentRecord.setText(score);
-        }else if(score > listScore.get(1)){
-            //j'ai battu tous les scores confondus
-            listScore.set(0,score);//mon record
-            listScore.set(1, score);//record global
-            myScore.setText(score);
-            opponentRecord.setText(score);
-        }else if(score <= listScore.get(1) && score >= listScore.get(0)){
-            //j'ai battu mon record mais pas tous les records confondus
-            listScore.set(0,score);//mon record
-        }
     }
 
+    //Get my record
+    public TextView getMyScoreJeu1Id(){
+        return findViewById(R.id.myRecordJeu1);
+    }
+    public TextView getMyScoreJeu2Id(){
+        return findViewById(R.id.myRecordJeu2);
+    }
+    public TextView getMyScoreJeu3Id(){
+        return findViewById(R.id.myRecordJeu3);
+    }
+    public TextView getMyScoreJeu4Id(){
+        return findViewById(R.id.myRecordJeu4);
+    }
+    public TextView getMyScoreJeu5Id(){
+        return findViewById(R.id.myRecordJeu5);
+    }
+    public TextView getMyScoreJeu6Id(){
+        return findViewById(R.id.myRecordJeu6);
+    }
+
+    //Get opponents record
+    public TextView getOpponentScoreJeu1Id(){
+        return findViewById(R.id.opponentRecordJeu1);
+    }
+    public TextView getOpponentScoreJeu2Id(){
+        return findViewById(R.id.opponentRecordJeu2);
+    }
+    public TextView getOpponentScoreJeu3Id(){
+        return findViewById(R.id.opponentRecordJeu3);
+    }
+    public TextView getOpponentScoreJeu4Id(){
+        return findViewById(R.id.opponentRecordJeu4);
+    }
+    public TextView getOpponentScoreJeu5Id(){
+        return findViewById(R.id.opponentRecordJeu5);
+    }
+    public TextView getOpponentScoreJeu6Id(){
+        return findViewById(R.id.opponentRecordJeu6);
+    }
 
 }

@@ -10,6 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private Button btnJeu1;
+    private Button btnJeu3;
     private Button btnJeu4;
     private Button btnHistorique;
 
@@ -23,6 +24,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, Jeu1.class);
+                startActivity(intent);
+            }
+        });
+
+        btnJeu3 = findViewById(R.id.btnJeu3);
+        btnJeu3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Jeu3.class);
                 startActivity(intent);
             }
         });

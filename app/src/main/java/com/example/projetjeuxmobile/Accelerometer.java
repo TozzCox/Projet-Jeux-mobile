@@ -13,8 +13,10 @@ import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Accelerometer extends View implements SensorEventListener {
@@ -37,6 +39,10 @@ public class Accelerometer extends View implements SensorEventListener {
 
     private CountDownTimer countDownTimer;
     String time = "0";
+
+    private Historique myScoreHistorique;
+    private Historique opponentRecordHistorique;
+    private ArrayList<Integer> listScore;
 
     public Accelerometer(Context context) {
         super(context);
@@ -78,6 +84,24 @@ public class Accelerometer extends View implements SensorEventListener {
             @Override
             public void onFinish() {
                 Toast.makeText(getContext(), "Votre score : " + score, Toast.LENGTH_LONG).show();
+
+                /*if(listScore.isEmpty()){
+                    //la liste est vide
+                    listScore.add(score);//mon record
+                    listScore.add(score);//tous records confondus
+                    myScoreHistorique.getMyScoreJeu1Id().setText(score);
+                    opponentRecordHistorique.getOpponentScoreJeu1Id().setText(score);
+                }else if(score > listScore.get(1)){
+                    //j'ai battu tous les scores confondus
+                    listScore.set(0, score);//mon record
+                    listScore.set(1, score);//record global
+                    myScoreHistorique.getMyScoreJeu1Id().setText(score);
+                    opponentRecordHistorique.getOpponentScoreJeu1Id().setText(score);
+                }else if(score <= listScore.get(1) && score >= listScore.get(0)){
+                    //j'ai battu mon record mais pas tous les records confondus
+                    listScore.set(0,score);//mon record
+                    myScoreHistorique.getMyScoreJeu1Id().setText(score);
+                }*/
             }
         }.start();
     }
@@ -134,9 +158,4 @@ public class Accelerometer extends View implements SensorEventListener {
         //rafraichissement de l'écran
         this.invalidate();
     }
-
-    public int getScore(){
-        return score;
-    }
-
 }
