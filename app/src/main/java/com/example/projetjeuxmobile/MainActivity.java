@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnJeu1;
     private Button btnJeu3;
     private Button btnJeu4;
+    private Button btnJeu5;
     private Button btnHistorique;
 
     @Override
@@ -42,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, QuizGame.class);
+                startActivity(intent);
+            }
+        });
+
+        btnJeu5 = findViewById(R.id.btnJeu5);
+        btnJeu5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Jeu5.class);
                 startActivity(intent);
             }
         });
