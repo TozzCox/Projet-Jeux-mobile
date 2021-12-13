@@ -3,7 +3,7 @@
 Jeu 1 capteur :
 Faire un objet qui se déplace en fonction des capteurs de l'accéléromètre, le faire aller à un marquage définit
 
-Jeu 2 capteur ou tactile : 
+Jeu 2 tactile : 
 Faire 3 rangées et avec un marqueur on doit esquiver des obstacles qui arrivent face à nous
 
 Jeu 3 tactile : 
@@ -15,4 +15,6 @@ l'application installée sur les deux telephone auront une meme base de données
 chaque x secondes le host et le client partageront leurs srcores mutuellement l'un à l'autre pour avoir chacun le scrore de l'autre.
 
 Jeu 5 tactile :
-Deja fait 
+Morpion
+
+Jeu 6 capteur : 
