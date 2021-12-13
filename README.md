@@ -18,3 +18,21 @@ Jeu 5 tactile :
 Morpion
 
 Jeu 6 capteur : 
+
+
+Cahier des charges
+1 - Pouvoir jouer en solo, duo ou plus
+2 - Musique du vainceur et du vaincu sur leurs telephones respectives
+3 - Le vainceur est designé grace au temps de reponse ou grace à la qualité de sa reponse
+4 - proposition de plus de 6 jeux au moins (4/6 réalisés)
+
+Fonctionnalités complémentaires envisagées
+1. Mode entraînement
+2. Proposition de défis ou de catégories supplémentaires
+3. Mode de jeu à plus de 3 joueurs
+4. Login des joueurs et association d’un score aux différents joueurs qui évolue dans le
+temps en fonction des résultats (règle de calcul complexe en comparant les scores
+des joueurs ;)) Les scores sont sauvegardés d’une session de jeu à une autre.
+5. Organisation d’un mode tournoi multijoueur
+6. Prévenir en temps réel les autres joueurs des défis déjà réalisé par leurs adversaires
+7. ... toutes autres idées
