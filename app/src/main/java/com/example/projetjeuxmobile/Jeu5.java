@@ -27,7 +27,7 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
             {0,4,8}, {2,4,6},
     };
 
-    @Override
+    @Override 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jeu5);
@@ -102,7 +102,7 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
             public void onClick(View view) {
                 playAgain();
                 playerOneScoreCount =0;
-                playerOneScoreCount =0;
+                playerTwoScoreCount =0;
                 playerStaus.setText("");
                 updatPlayerScore();
             }
