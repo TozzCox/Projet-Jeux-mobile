@@ -19,6 +19,20 @@ Morpion
 
 Jeu 6 capteur : 
 
+Comment faire le son :
+Creer un repertoire "raw" qui contiendra l'ensemble de nos media puis copie le son a l'interieur du repertoire
+
+// Juste dans la classe
+private MediaPlayer mediaPlayer;
+
+// Dans le onCreate
+this.mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.my_sound);
+R.raw -> le fichier creer plus haut dans la ressource.
+"my_sound" -> le nom de ma musique en mp3, ogg, ...
+
+// Evennement qui fait jouer le son
+mediaPlayer.start();
+
 
 Cahier des charges
 1 - Pouvoir jouer en solo, duo ou plus
