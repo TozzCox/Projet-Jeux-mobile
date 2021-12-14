@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnJeu3;
     private Button btnJeu4;
     private Button btnJeu5;
+    private Button btnDuel;
     private Button btnHistorique;
 
     @Override
@@ -52,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, Jeu5.class);
+                startActivity(intent);
+            }
+        });
+
+        btnDuel = findViewById(R.id.btnDuel);
+        btnDuel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, P2P.class);
                 startActivity(intent);
             }
         });

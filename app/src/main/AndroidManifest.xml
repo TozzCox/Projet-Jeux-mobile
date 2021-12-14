@@ -6,6 +6,13 @@
         android:name="android.hardware.sensor.accelerometer"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,24 +21,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetJeuxMobile">
         <activity
+            android:name=".P2P"
+            android:exported="false" />
+        <activity
             android:name=".Jeu5"
             android:exported="false" />
         <activity
             android:name=".Jeu3"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="false" />
         <activity
             android:name=".Historique"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="false" />
         <activity
             android:name=".QuizActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="false" />
         <activity
             android:name=".QuizGame"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -43,8 +49,7 @@
         </activity>
         <activity
             android:name=".Jeu1"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="false" />
     </application>
 
 </manifest>
