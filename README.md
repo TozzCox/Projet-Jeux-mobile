@@ -34,6 +34,12 @@ R.raw -> le fichier creer plus haut dans la ressource.
 mediaPlayer.start();
 
 
+Commment passer d'un jeu a un autre : 
+- > On cree une un boolean duel dans le MainActivity qui sera true que si on clique sur duel 
+- > Ensuite dans chaque activité ou lieux de mettre finish pour terminer l'activité on fait un condition: 
+- - > if duel == true on fait un itent pour passer au jeu suivant else if on fait un finish
+
+
 Cahier des charges
 1 - Pouvoir jouer en solo, duo ou plus
 2 - Musique du vainceur et du vaincu sur leurs telephones respectives
