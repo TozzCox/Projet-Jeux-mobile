@@ -17,6 +17,7 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,8 +35,11 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class P2P extends AppCompatActivity {
 
@@ -59,7 +63,9 @@ public class P2P extends AppCompatActivity {
 
     ServerClass serverClass;
     ClientClass clientClass;
-    SendReceive sendReceive;
+    boolean isHost;
+
+    Socket socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +140,19 @@ public class P2P extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ExecutorService executor = Executors.newSingleThreadExecutor();
                 String msg = writeMsg.getText().toString();
-                sendReceive.write(msg.getBytes());
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (msg!=null && isHost){
+                            serverClass.write(msg.getBytes());
+                        }else if(msg!=null && !isHost){
+                            clientClass.write(msg.getBytes());
+                        }
+                    }
+                });
+
             }
         });
 
@@ -199,10 +216,12 @@ public class P2P extends AppCompatActivity {
 
             if(wifiP2pInfo.groupFormed && wifiP2pInfo.isGroupOwner){
                 connectionStatus.setText("Host");
+                isHost = true;
                 serverClass = new ServerClass();
                 serverClass.start();
             } else if (wifiP2pInfo.groupFormed){
                 connectionStatus.setText("Client");
+                isHost = false;
                 clientClass= new ClientClass(groupOwnerAddress);
                 clientClass.start();
             }
@@ -222,31 +241,13 @@ public class P2P extends AppCompatActivity {
     }
 
     public class ServerClass extends Thread{
-        Socket socket;
         ServerSocket serverSocket;
-        @Override
-        public void run(){
-            try {
-                serverSocket = new ServerSocket(8080);
-                socket=serverSocket.accept();
-                sendReceive=new SendReceive(socket);
-                sendReceive.start();
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public class SendReceive extends Thread{
-        private Socket socket;
         private InputStream inputStream;
         private OutputStream outputStream;
 
-        public SendReceive(Socket skt){
-            socket=skt;
+        public void write(byte[] bytes){
             try {
-                inputStream = socket.getInputStream();
-                outputStream = socket.getOutputStream();
+                outputStream.write(bytes);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -254,19 +255,54 @@ public class P2P extends AppCompatActivity {
 
         @Override
         public void run(){
-            byte[] buffer=new byte[1024];
-            int bytes;
-
-            while(socket!=null){
-                try {
-                    bytes = inputStream.read(buffer);
-                    if(bytes>0){
-                        handler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            try {
+                serverSocket = new ServerSocket(8080);
+                socket=serverSocket.accept();
+                inputStream = socket.getInputStream();
+                outputStream = socket.getOutputStream();
+            } catch (IOException e){
+                e.printStackTrace();
             }
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    byte[] buffer = new byte[1024];
+                    int bytes;
+
+                    while(socket!=null){
+                        try {
+                            bytes = inputStream.read(buffer);
+                            if(bytes>0){
+                                int finalBytes = bytes;
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String tempMSG = new String(buffer, 0, finalBytes);
+                                        read_msg_box.setText(tempMSG);
+                                    }
+                                });
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    public class ClientClass extends Thread{
+        String hostAdd;
+        private InputStream inputStream;
+        private OutputStream outputStream;
+
+        public ClientClass(InetAddress hostAddress){
+            hostAdd = hostAddress.getHostAddress();
+            socket=new Socket();
         }
 
         public void write(byte[] bytes){
@@ -276,25 +312,46 @@ public class P2P extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
 
-    public class ClientClass extends Thread{
-        Socket socket;
-        String hostAdd;
-
-        public ClientClass(InetAddress hostAddress){
-            hostAdd = hostAddress.getHostAddress();
-            socket=new Socket();
-        }
         @Override
         public void run(){
             try {
                 socket.connect(new InetSocketAddress(hostAdd, 8080),500);
-                sendReceive=new SendReceive(socket);
-                sendReceive.start();
+                inputStream = socket.getInputStream();
+                outputStream = socket.getOutputStream();
             } catch (IOException e){
                 e.printStackTrace();
             }
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    byte[] buffer = new byte[1024];
+                    int bytes;
+
+                    while(socket!=null){
+                        try {
+                            bytes = inputStream.read(buffer);
+                            if(bytes>0){
+                                int finalBytes = bytes;
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String tempMSG = new String (buffer, 0,finalBytes);
+                                        read_msg_box.setText(tempMSG);
+                                    }
+                                });
+                                handler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
         }
     }
 
