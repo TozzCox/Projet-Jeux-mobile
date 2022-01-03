@@ -33,6 +33,9 @@ R.raw -> le fichier creer plus haut dans la ressource.
 // Evennement qui fait jouer le son
 mediaPlayer.start();
 
+// Faire une variable global static
+public static int score = 0;
+MainActivity.score = 12;
 
 Commment passer d'un jeu a un autre : 
 - > On cree une un boolean duel dans le MainActivity qui sera true que si on clique sur duel 
