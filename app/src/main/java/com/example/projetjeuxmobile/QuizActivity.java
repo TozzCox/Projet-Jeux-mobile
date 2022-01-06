@@ -2,6 +2,7 @@ package com.example.projetjeuxmobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -126,7 +127,13 @@ public class QuizActivity extends AppCompatActivity {
             tvQuestionNo.setText("Question: "+qCounter+"/"+totalQuestions);
             answered = false;
         }else {
-            finish();
+            //finish();
+            if (MainActivity.duel ==true){
+                Intent intent = new Intent(QuizActivity.this,  Jeu3.class);
+                startActivity(intent);
+            }else {
+                finish();
+            }
         }
     }
 

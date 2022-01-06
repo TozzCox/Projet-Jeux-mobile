@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class QuizGame extends AppCompatActivity {
+public class jeu4 extends AppCompatActivity {
 
     Button btnStart;
 
@@ -20,7 +20,7 @@ public class QuizGame extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QuizGame.this, QuizActivity.class);
+                Intent intent = new Intent(jeu4.this, QuizActivity.class);
                 startActivity(intent);
             }
         });

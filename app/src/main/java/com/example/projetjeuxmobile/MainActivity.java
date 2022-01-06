@@ -16,6 +16,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btnDuel;
     private Button btnHistorique;
 
+
+    public static Boolean duel = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         btnJeu4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, QuizGame.class);
+                Intent intent = new Intent(MainActivity.this, jeu4.class);
                 startActivity(intent);
             }
         });
@@ -61,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
         btnDuel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, P2P.class);
+                duel = true;
+                Intent intent = new Intent(MainActivity.this, jeu4.class);
                 startActivity(intent);
             }
         });
