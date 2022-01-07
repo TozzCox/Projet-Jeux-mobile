@@ -10,6 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private Button btnJeu1;
+    private Button btnJeu2;
     private Button btnJeu3;
     private Button btnJeu4;
     private Button btnJeu5;
@@ -26,6 +27,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, Jeu1.class);
+                startActivity(intent);
+            }
+        });
+
+        btnJeu2 = findViewById(R.id.btnJeu2);
+        btnJeu2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Jeu2.class);
                 startActivity(intent);
             }
         });

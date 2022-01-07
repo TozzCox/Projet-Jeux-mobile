@@ -1,14 +1,11 @@
 package com.example.projetjeuxmobile;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
@@ -18,15 +15,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +31,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -43,62 +38,58 @@ import java.util.concurrent.Executors;
 
 public class P2P extends AppCompatActivity {
 
-    Button btnDiscover, btnSend;
+    TextView connectionStatus, messageTextView;
+    Button discoverButton;
     ListView listView;
-    TextView read_msg_box, connectionStatus;
-    EditText writeMsg;
+    EditText typeMsg;
+    ImageButton sendButton;
 
-    WifiManager wifiManager;
-    WifiP2pManager mManager;
-    WifiP2pManager.Channel mChannel;
+    WifiP2pManager manager;
+    WifiP2pManager.Channel channel;
 
-    BroadcastReceiver mReceiver;
-    IntentFilter mIntentFilter;
+    BroadcastReceiver receiver;
+    IntentFilter intentFilter;
 
     List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
     String[] deviceNameArray;
     WifiP2pDevice[] deviceArray;
 
-    static final int MESSAGE_READ=1;
+    Socket socket;
 
     ServerClass serverClass;
     ClientClass clientClass;
-    boolean isHost;
 
-    Socket socket;
+    boolean isHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] permissions = {"android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_WIFI_STATE", "android.permission.CHANGE_WIFI_STATE", "android.permission.CHANGE_NETWORK_STATE", "android.permission.INTERNET", "android.permission.ACCESS_NETWORK_STATE"};
-        this.requestAllPermissions(permissions);
         setContentView(R.layout.activity_p2_p);
-        initialWork();
+
+        String[] permissions = { "android.permission.ACCESS_FINE_LOCATION",
+                "android.permission.ACCESS_COARSE_LOCATION",
+                "android.permission.ACCESS_WIFI_STATE",
+                "android.permission.CHANGE_WIFI_STATE",
+                "android.permission.CHANGE_NETWORK_STATE",
+                "android.permission.INTERNET",
+                "android.permission.ACCESS_NETWORK_STATE"};
+        this.requestAllPermissions(permissions);
+
+        initWork();
         exqListener();
     }
 
-    Handler handler = new Handler(new Handler.Callback(){
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what){
-                case MESSAGE_READ:
-                    byte[] readBuff = (byte[]) msg.obj;
-                    String tempMsg=new String(readBuff, 0, msg.arg1);
-                    read_msg_box.setText(tempMsg);
-                    break;
-            }
-            return true;
+    private void requestAllPermissions(String[] permissions) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, 80);
         }
-    });
+    }
 
     private void exqListener() {
-        btnDiscover.setOnClickListener(new View.OnClickListener() {
+        discoverButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
+            public void onClick(View view) {
+                manager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
                         connectionStatus.setText("Discovery Started");
@@ -106,9 +97,10 @@ public class P2P extends AppCompatActivity {
 
                     @Override
                     public void onFailure(int i) {
-                        connectionStatus.setText("Discovery Starting Failed");
+                        connectionStatus.setText("Discovery Failed");
                     }
                 });
+
             }
         });
 
@@ -118,93 +110,81 @@ public class P2P extends AppCompatActivity {
                 final WifiP2pDevice device = deviceArray[i];
                 WifiP2pConfig config = new WifiP2pConfig();
                 config.deviceAddress = device.deviceAddress;
-
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                mManager.connect(mChannel, config, new WifiP2pManager.ActionListener() {
+                manager.connect(channel, config, new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(getApplicationContext(), "Connected to " + device.deviceName, Toast.LENGTH_SHORT).show();
+                        connectionStatus.setText("Connected: " + device.deviceName);
                     }
 
                     @Override
-                    public void onFailure(int reason) {
-                        Toast.makeText(getApplicationContext(), "Not  Connected", Toast.LENGTH_SHORT).show();
+                    public void onFailure(int i) {
+                        connectionStatus.setText("Not Connected");
                     }
                 });
             }
-
         });
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ExecutorService executor = Executors.newSingleThreadExecutor();
-                String msg = writeMsg.getText().toString();
+                String msg = typeMsg.getText().toString();
                 executor.execute(new Runnable() {
                     @Override
                     public void run() {
-                        if (msg!=null && isHost){
+                        if(msg!=null && isHost){
                             serverClass.write(msg.getBytes());
-                        }else if(msg!=null && !isHost){
+                        }else if (msg!=null && !isHost){
                             clientClass.write(msg.getBytes());
                         }
                     }
                 });
-
             }
         });
-
     }
 
-    private void initialWork() {
+    @SuppressLint("WrongViewCast")
+    private void initWork(){
+        connectionStatus = findViewById(R.id.connection_status);
+        messageTextView = findViewById(R.id.messageTextView);
+        discoverButton = findViewById(R.id.buttonDiscover);
+        listView = findViewById(R.id.listView);
+        typeMsg = findViewById(R.id.editTextTypeMsg);
+        sendButton = findViewById(R.id.sendButton);
 
-        btnDiscover = (Button) findViewById(R.id.discover);
-        btnSend = (Button) findViewById(R.id.sendButton);
-        listView = (ListView) findViewById(R.id.peerListView);
-        read_msg_box = (TextView) findViewById(R.id.readMsg);
-        connectionStatus = (TextView) findViewById(R.id.connectionStatus);
-        writeMsg = (EditText) findViewById(R.id.writeMsg);
+        manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
+        channel = manager.initialize(this, getMainLooper(), null);
+        receiver = new WifiDirectBroadcastReceiver(manager, channel, this);
 
-        wifiManager = (WifiManager) getApplicationContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
-        mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
-        mChannel = mManager.initialize(this, getMainLooper(),null);
-
-        mReceiver = new WifiDirectBroadcastReceiver(mManager, mChannel, this);
-
-        mIntentFilter = new IntentFilter();
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+        intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+        intentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
     }
 
     WifiP2pManager.PeerListListener peerListListener = new WifiP2pManager.PeerListListener() {
         @Override
-        public void onPeersAvailable(WifiP2pDeviceList peerList) {
-            if(!peerList.getDeviceList().equals(peers)){
+        public void onPeersAvailable(WifiP2pDeviceList wifiP2pDeviceList) {
+            if(!wifiP2pDeviceList.equals(peers)){
                 peers.clear();
-                peers.addAll(peerList.getDeviceList());
+                peers.addAll(wifiP2pDeviceList.getDeviceList());
 
-                deviceNameArray = new String[peerList.getDeviceList().size()];
-                deviceArray = new WifiP2pDevice[peerList.getDeviceList().size()];
+                deviceNameArray = new String[wifiP2pDeviceList.getDeviceList().size()];
+                deviceArray = new WifiP2pDevice[wifiP2pDeviceList.getDeviceList().size()];
+
                 int index = 0;
-
-                for(WifiP2pDevice device : peerList.getDeviceList()){
+                for(WifiP2pDevice device : wifiP2pDeviceList.getDeviceList()){
                     deviceNameArray[index] = device.deviceName;
-                    deviceArray[index]=device;
-                    index ++;
+                    deviceArray[index] = device;
                 }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,deviceNameArray);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, deviceNameArray);
                 listView.setAdapter(adapter);
-            }
 
-            if(peers.size()==0){
-                Toast.makeText(getApplicationContext(), "No Device Found", Toast.LENGTH_SHORT).show();
-                return;
+                if(peers.size() == 0){
+                    connectionStatus.setText("No Device Found");
+                    return;
+                }
             }
         }
     };
@@ -213,16 +193,15 @@ public class P2P extends AppCompatActivity {
         @Override
         public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
             final InetAddress groupOwnerAddress = wifiP2pInfo.groupOwnerAddress;
-
             if(wifiP2pInfo.groupFormed && wifiP2pInfo.isGroupOwner){
                 connectionStatus.setText("Host");
                 isHost = true;
                 serverClass = new ServerClass();
                 serverClass.start();
-            } else if (wifiP2pInfo.groupFormed){
+            }else if(wifiP2pInfo.groupFormed){
                 connectionStatus.setText("Client");
                 isHost = false;
-                clientClass= new ClientClass(groupOwnerAddress);
+                clientClass = new ClientClass(groupOwnerAddress);
                 clientClass.start();
             }
         }
@@ -231,13 +210,13 @@ public class P2P extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(mReceiver, mIntentFilter);
+        registerReceiver(receiver, intentFilter);
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause(){
         super.onPause();
-        unregisterReceiver(mReceiver);
+        unregisterReceiver(receiver);
     }
 
     public class ServerClass extends Thread{
@@ -256,11 +235,11 @@ public class P2P extends AppCompatActivity {
         @Override
         public void run(){
             try {
-                serverSocket = new ServerSocket(8080);
-                socket=serverSocket.accept();
+                serverSocket = new ServerSocket(8888);
+                socket = serverSocket.accept();
                 inputStream = socket.getInputStream();
                 outputStream = socket.getOutputStream();
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -281,8 +260,8 @@ public class P2P extends AppCompatActivity {
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        String tempMSG = new String(buffer, 0, finalBytes);
-                                        read_msg_box.setText(tempMSG);
+                                        String tempMsg = new String(buffer, 0, finalBytes);
+                                        messageTextView.setText(tempMsg);
                                     }
                                 });
                             }
@@ -295,6 +274,7 @@ public class P2P extends AppCompatActivity {
         }
     }
 
+
     public class ClientClass extends Thread{
         String hostAdd;
         private InputStream inputStream;
@@ -302,7 +282,7 @@ public class P2P extends AppCompatActivity {
 
         public ClientClass(InetAddress hostAddress){
             hostAdd = hostAddress.getHostAddress();
-            socket=new Socket();
+            socket = new Socket();
         }
 
         public void write(byte[] bytes){
@@ -316,10 +296,10 @@ public class P2P extends AppCompatActivity {
         @Override
         public void run(){
             try {
-                socket.connect(new InetSocketAddress(hostAdd, 8080),500);
+                socket.connect(new InetSocketAddress(hostAdd, 8888), 500);
                 inputStream = socket.getInputStream();
                 outputStream = socket.getOutputStream();
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -340,11 +320,10 @@ public class P2P extends AppCompatActivity {
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        String tempMSG = new String (buffer, 0,finalBytes);
-                                        read_msg_box.setText(tempMSG);
+                                        String tempMsg = new String(buffer, 0, finalBytes);
+                                        messageTextView.setText(tempMsg);
                                     }
                                 });
-                                handler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -353,13 +332,7 @@ public class P2P extends AppCompatActivity {
                 }
             });
         }
-    }
 
-    public void requestAllPermissions(String[] permissions)
-    {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, 80);
-        }
-    }
 
+    }
 }
