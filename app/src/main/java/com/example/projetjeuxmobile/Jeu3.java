@@ -160,6 +160,7 @@ public class Jeu3 extends AppCompatActivity {
             public void onFinish() {
                 Toast.makeText(getApplicationContext(), "Votre score : " + currentScore, Toast.LENGTH_LONG).show();
                 if (MainActivity.duel ==true){
+                    MainActivity.duelScore = currentScore;
                     Intent intent = new Intent(Jeu3.this, Jeu4.class);
                     startActivity(intent);
                 }else {

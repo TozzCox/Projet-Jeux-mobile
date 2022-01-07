@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static Boolean duel = false;
+    public static int duelScore = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
