@@ -159,9 +159,14 @@ public class Jeu3 extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Toast.makeText(getApplicationContext(), "Votre score : " + currentScore, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-
+                if (MainActivity.duel ==true){
+                    MainActivity.duelScore = currentScore;
+                    Intent intent = new Intent(Jeu3.this, Jeu4.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
             }
         }.start();
     }

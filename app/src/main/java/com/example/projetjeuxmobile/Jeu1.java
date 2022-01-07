@@ -45,8 +45,15 @@ public class Jeu1 extends AppCompatActivity{
 
             @Override
             public void onFinish() {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+
+                if (MainActivity.duel ==true){
+                    Intent intent = new Intent(Jeu1.this, Jeu3.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+
             }
         }.start();
     }

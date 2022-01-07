@@ -2,10 +2,12 @@ package com.example.projetjeuxmobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -126,7 +128,16 @@ public class QuizActivity extends AppCompatActivity {
             tvQuestionNo.setText("Question: "+qCounter+"/"+totalQuestions);
             answered = false;
         }else {
-            finish();
+            //finish();
+            if (MainActivity.duel ==true){
+                MainActivity.duelScore += score;
+                Log.d("votre scrore", Integer.toString(MainActivity.duelScore));
+                Toast.makeText(getApplicationContext(), "Votre score : " + MainActivity.duelScore, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(QuizActivity.this,  Jeu5.class);
+                startActivity(intent);
+            }else {
+                finish();
+            }
         }
     }
 

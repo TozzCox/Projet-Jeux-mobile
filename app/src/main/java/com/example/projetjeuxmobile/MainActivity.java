@@ -17,6 +17,11 @@ public class MainActivity extends AppCompatActivity {
     private Button btnDuel;
     private Button btnHistorique;
 
+
+    public static Boolean duel = false;
+    public static int duelScore = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         btnJeu1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                duel = false;
                 Intent intent = new Intent(MainActivity.this, Jeu1.class);
                 startActivity(intent);
             }
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         btnJeu3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                duel = false;
                 Intent intent = new Intent(MainActivity.this, Jeu3.class);
                 startActivity(intent);
             }
@@ -53,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
         btnJeu4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, QuizGame.class);
+                duel = false;
+                Intent intent = new Intent(MainActivity.this, Jeu4.class);
                 startActivity(intent);
             }
         });
@@ -62,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         btnJeu5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                duel = false;
                 Intent intent = new Intent(MainActivity.this, Jeu5.class);
                 startActivity(intent);
             }
@@ -71,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
         btnDuel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, P2P.class);
+                duel = true;
+                Intent intent = new Intent(MainActivity.this, Jeu1.class);
                 startActivity(intent);
             }
         });
