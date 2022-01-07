@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         btnJeu1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                duel = false;
                 Intent intent = new Intent(MainActivity.this, Jeu1.class);
                 startActivity(intent);
             }
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         btnJeu3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                duel = false;
                 Intent intent = new Intent(MainActivity.this, Jeu3.class);
                 startActivity(intent);
             }
@@ -46,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         btnJeu4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, jeu4.class);
+                duel = false;
+                Intent intent = new Intent(MainActivity.this, Jeu4.class);
                 startActivity(intent);
             }
         });
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         btnJeu5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                duel = false;
                 Intent intent = new Intent(MainActivity.this, Jeu5.class);
                 startActivity(intent);
             }
@@ -65,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 duel = true;
-                Intent intent = new Intent(MainActivity.this, jeu4.class);
+                Intent intent = new Intent(MainActivity.this, Jeu1.class);
                 startActivity(intent);
             }
         });

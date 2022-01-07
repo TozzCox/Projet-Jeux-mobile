@@ -129,7 +129,7 @@ public class QuizActivity extends AppCompatActivity {
         }else {
             //finish();
             if (MainActivity.duel ==true){
-                Intent intent = new Intent(QuizActivity.this,  Jeu3.class);
+                Intent intent = new Intent(QuizActivity.this,  Jeu5.class);
                 startActivity(intent);
             }else {
                 finish();

@@ -85,6 +85,7 @@ public class Accelerometer extends View implements SensorEventListener {
             public void onFinish() {
                 Toast.makeText(getContext(), "Votre score : " + score, Toast.LENGTH_LONG).show();
 
+
                 /*if(listScore.isEmpty()){
                     //la liste est vide
                     listScore.add(score);//mon record
