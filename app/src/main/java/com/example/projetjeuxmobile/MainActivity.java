@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnJeu3;
     private Button btnJeu4;
     private Button btnJeu5;
+    private Button btnJeu6;
     private Button btnDuel;
     private Button btnHistorique;
 
@@ -75,6 +76,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnJeu6 = findViewById(R.id.btnJeu6);
+        btnJeu6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                duel = false;
+                Intent intent = new Intent(MainActivity.this, Jeu6.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         btnDuel = findViewById(R.id.btnDuel);
         btnDuel.setOnClickListener(new View.OnClickListener() {

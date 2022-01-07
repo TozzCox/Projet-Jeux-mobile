@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Jeu6">
+
+    <RelativeLayout
+        android:id="@+id/imageBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:translationY="200sp"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/kisspng_portable_network_graphics_arrow_computer_icons_cli_arrow_down_svg_vector_icon_free_icons_uihere_5cfef608761bd6_8907592115602130004838"
+            tools:layout_editor_absoluteX="159dp"
+            tools:layout_editor_absoluteY="90dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/drawArea"
+        android:layout_width="391dp"
+        android:layout_height="574dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="276dp"
+        tools:ignore="MissingConstraints">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="391dp"
+        android:layout_height="77dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="42dp">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="90sp"
+            android:text="Ne pas scroller dans le"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80sp"
+            android:layout_marginTop="30dp"
+            android:text="même sens que la flèche"
+            android:textSize="20dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:translationX="150sp"
+        android:translationY="120sp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="120dp">
+
+        <TextView
+            android:id="@+id/scoreJeu6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Score : 0"
+            android:textAlignment="center"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

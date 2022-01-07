@@ -27,12 +27,16 @@ public class AccelerometerJeu2 extends View implements SensorEventListener {
 
     private int kartWidth;
     private int kartHeight;
-    private int currentX;
-    private int currentY = 1300;
-    private int coinWidth;
-    private int coinHeight;
+    private int kartX;
+    private int kartY = 1300;
     private int coinX;
     private int coinY;
+    private int coinWidth;
+    private int coinHeight;
+    private int bombX;
+    private int bombY;
+    private int bombWidth;
+    private int bombHeight;
     private Random rdm = new Random();
     private int score = 0;
 
@@ -58,17 +62,24 @@ public class AccelerometerJeu2 extends View implements SensorEventListener {
 
         kartBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kisspng_berg_john_deere_pedal_kart_bfr_3_7_21_tract_5bf10d032e8019_3886830315425241631905);
         kartWidth = kartBitmap.getWidth();
-        this.currentX = (w - kartWidth)/2;
+        kartHeight = kartBitmap.getHeight();
+        this.kartX = (w - kartWidth)/2;
 
         coinBitmap = BitmapFactory.decodeResource(getResources(), R.drawable._a1d22de34f053_8887437415118589102168);
         coinWidth = coinBitmap.getWidth();
         coinHeight = coinBitmap.getHeight();
-        this.coinX = rdm.nextInt(getWidth()-coinWidth);;
+        this.coinX = rdm.nextInt(getWidth()-coinWidth);
         this.coinY = 100;
+
+        bombBitmap = BitmapFactory.decodeResource(getResources(), R.drawable._a370a561e2ac5_0712656815135565661236);
+        bombWidth = bombBitmap.getWidth();
+        bombHeight = bombBitmap.getHeight();
+        this.bombX = rdm.nextInt(getWidth()-bombWidth);
+        this.bombY = 100;
 
         previousTime = 200;
         //lancer le chrono qu'une seule fois
-        countDownTimer = new CountDownTimer(20000, 100) {
+        countDownTimer = new CountDownTimer(20000, 10) {
             @Override
             public void onTick(long l) {
                 if(l/1000>=10){
@@ -79,7 +90,8 @@ public class AccelerometerJeu2 extends View implements SensorEventListener {
 
                 if(l != previousTime){
                     previousTime = (int) l;
-                    movekart(l);
+                    movecoin();
+                    movebomb();
                 }
             }
 
@@ -112,7 +124,8 @@ public class AccelerometerJeu2 extends View implements SensorEventListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawBitmap(coinBitmap, coinX, coinY, paint);
-        canvas.drawBitmap(kartBitmap, currentX, currentY, paint);
+        canvas.drawBitmap(bombBitmap, bombX, bombY, paint);
+        canvas.drawBitmap(kartBitmap, kartX, kartY, paint);
 
         paintScore.setTextSize(70);
         paintScore.setARGB(255, 127, 0, 255);
@@ -127,19 +140,47 @@ public class AccelerometerJeu2 extends View implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float x = sensorEvent.values[0];
-        //float y = sensorEvent.values[1];
-        //float z = sensorEvent.values[2];
         this.movekart(-x*9f);
         Log.d("DEBUG","x :" + x );
     }
 
-    private void movekart(float x){
-        this.currentX += (int) x;
+    private void movebomb(){
+        if(this.bombY <= this.kartY + kartHeight/2 - 200){
+            this.bombY += 20;
+        }else{
+            bombX = rdm.nextInt(getWidth()-bombWidth);
+            bombY = 100;
+        }
 
-        if (currentX<-200){
-            currentX = -200;
-        }else if (this.currentX + kartWidth - 200 > getWidth() ){
-            currentX = getWidth()-kartWidth + 200;
+        //Log.d("debug1","\ncoin +50:" + (this.coinX + coinWidth/2 +100) + " coin -50:" +(this.coinX + coinWidth/2 - 100) + "\nkartX:"+(this.kartX + kartWidth/2)+" kartY:"+kartY);
+        //Log.d("dimension", "\nkartHeight:"+kartHeight+" kartWidth:"+kartWidth+"\ncoinHeight:"+coinHeight+" coinWidth:"+coinWidth);
+        if(this.bombY == this.kartY && this.kartX + kartWidth/2 <= this.bombX + bombWidth/2 +100 && this.kartX + kartWidth/2 >= this.bombX + bombWidth/2 - 100){
+            score-=1;
+        }
+    }
+
+    private void movecoin(){
+        if(this.coinY <= this.kartY + kartHeight/2 - 200){
+            this.coinY += 10;
+        }else{
+            coinX = rdm.nextInt(getWidth()-coinWidth);
+            coinY = 100;
+        }
+
+        //Log.d("debug1","\ncoin +50:" + (this.coinX + coinWidth/2 +100) + " coin -50:" +(this.coinX + coinWidth/2 - 100) + "\nkartX:"+(this.kartX + kartWidth/2)+" kartY:"+kartY);
+        //Log.d("dimension", "\nkartHeight:"+kartHeight+" kartWidth:"+kartWidth+"\ncoinHeight:"+coinHeight+" coinWidth:"+coinWidth);
+        if(this.coinY == this.kartY && this.kartX + kartWidth/2 <= this.coinX + coinWidth/2 +100 && this.kartX + kartWidth/2 >= this.coinX + coinWidth/2 - 100){
+            score+=1;
+        }
+    }
+
+    private void movekart(float x){
+        this.kartX += (int) x;
+
+        if (kartX<-200){
+            kartX = -200;
+        }else if (this.kartX + kartWidth - 200 > getWidth() ){
+            kartX = getWidth()-kartWidth + 200;
         }
 
 
