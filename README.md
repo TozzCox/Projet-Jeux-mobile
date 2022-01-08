@@ -42,6 +42,9 @@ Commment passer d'un jeu a un autre :
 - > Ensuite dans chaque activité ou lieux de mettre finish pour terminer l'activité on fait un condition: 
 - - > if duel == true on fait un itent pour passer au jeu suivant else if on fait un finish
 
+  Comment faire des jeux aleatoirement de chaque categorie
+- 
+
 
 Cahier des charges
 1 - Pouvoir jouer en solo, duo ou plus
