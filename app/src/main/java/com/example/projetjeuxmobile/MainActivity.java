@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnJeu1;
@@ -21,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static Boolean duel = false;
     public static int duelScore = 0;
+    ArrayList<String> tactile = new ArrayList<String>();
+    ArrayList<String> capteur = new ArrayList<String>();
+    public static ArrayList<String> list_game = new ArrayList<String>();
 
 
     @Override
@@ -94,7 +100,55 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 duel = true;
-                Intent intent = new Intent(MainActivity.this, Jeu1.class);
+
+                // adding elements
+                tactile.add("2");
+                tactile.add("3");
+
+                capteur.add("4");
+                //capteur.add("5");
+                //capteur.add("6");
+
+                String tactile_game = tactile.get(new Random().nextInt(tactile.size()));
+                String capteur_game = capteur.get(new Random().nextInt(capteur.size()));
+
+                list_game.add("1");
+                list_game.add(tactile_game);
+                list_game.add(capteur_game);
+
+                String current_game = list_game.get(new Random().nextInt(list_game.size()));
+                list_game.remove(current_game);
+
+                Class activity = null;
+
+
+                switch(current_game) {
+                    case "1":
+
+                        // E.g., if the output is 1, the activity we will open is ActivityOne.class
+                        activity = Jeu1.class;
+                        break;
+                    case "2":
+                        activity = Jeu2.class;
+                        break;
+                    case "3":
+                        activity = Jeu3.class;
+                        break;
+                    case "4":
+                        activity = Jeu4.class;
+                        break;
+                    case "5":
+                        activity = Jeu5.class;
+                        break;
+                    case "6":
+                        activity = Jeu6.class;
+                        break;
+                    default:
+                        activity = MainActivity.class;
+                        break;
+                }
+                // We use intents to start activities
+                Intent intent = new Intent(getBaseContext(), activity);
                 startActivity(intent);
             }
         });
