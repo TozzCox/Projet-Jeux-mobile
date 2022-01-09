@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 duel = true;
 
                 // adding elements
-                tactile.add("2");
+                //tactile.add("2");
                 tactile.add("3");
 
                 capteur.add("4");
@@ -115,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
                 list_game.add("1");
                 list_game.add(tactile_game);
                 list_game.add(capteur_game);
+                Log.d(list_game.get(0), list_game.get(1));
+                Log.d(list_game.get(2), list_game.get(2));
+
 
                 String current_game = list_game.get(new Random().nextInt(list_game.size()));
                 list_game.remove(current_game);

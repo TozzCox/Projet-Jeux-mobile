@@ -49,41 +49,46 @@ public class Jeu1 extends AppCompatActivity{
             public void onFinish() {
 
                 if (MainActivity.duel == true){
-                    String current_game = MainActivity.list_game.get(new Random().nextInt(MainActivity.list_game.size()));
-                    MainActivity.list_game.remove(current_game);
+                    if (MainActivity.list_game.size()>0){
+                        String current_game = MainActivity.list_game.get(new Random().nextInt(MainActivity.list_game.size()));
+                        MainActivity.list_game.remove(current_game);
 
 
-                    Class activity = null;
+                        Class activity = null;
 
-                    // Here, we are checking to see what the output of the random was
-                    switch(current_game) {
-                        case "1":
+                        // Here, we are checking to see what the output of the random was
+                        switch(current_game) {
+                            case "1":
 
-                            // E.g., if the output is 1, the activity we will open is ActivityOne.class
-                            activity = Jeu1.class;
-                            break;
-                        case "2":
-                            activity = Jeu2.class;
-                            break;
-                        case "3":
-                            activity = Jeu3.class;
-                            break;
-                        case "4":
-                            activity = Jeu4.class;
-                            break;
-                        case "5":
-                            activity = Jeu5.class;
-                            break;
-                        case "6":
-                            activity = Jeu6.class;
-                            break;
-                        default:
-                            activity = MainActivity.class;
-                            break;
+                                // E.g., if the output is 1, the activity we will open is ActivityOne.class
+                                activity = Jeu1.class;
+                                break;
+                            case "2":
+                                activity = Jeu2.class;
+                                break;
+                            case "3":
+                                activity = Jeu3.class;
+                                break;
+                            case "4":
+                                activity = Jeu4.class;
+                                break;
+                            case "5":
+                                activity = Jeu5.class;
+                                break;
+                            case "6":
+                                activity = Jeu6.class;
+                                break;
+                            default:
+                                activity = MainActivity.class;
+                                break;
+                        }
+                        // We use intents to start activities
+                        Intent intent = new Intent(getBaseContext(), activity);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
                     }
-                    // We use intents to start activities
-                    Intent intent = new Intent(getBaseContext(), activity);
-                    startActivity(intent);
 
                 }else {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
