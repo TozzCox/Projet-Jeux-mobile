@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 duel = false;
-                Intent intent = new Intent(MainActivity.this, Game4.class);
+                Intent intent = new Intent(MainActivity.this, Jeu4.class);
                 startActivity(intent);
             }
         });
@@ -130,22 +130,22 @@ public class MainActivity extends AppCompatActivity {
                     case "1":
 
                         // E.g., if the output is 1, the activity we will open is ActivityOne.class
-                        activity = Jeu1.class;
+                        activity = Game1.class;
                         break;
                     case "2":
-                        activity = Jeu2.class;
+                        activity = Game2.class;
                         break;
                     case "3":
-                        activity = Jeu3.class;
+                        activity = Game3.class;
                         break;
                     case "4":
                         activity = Jeu4.class;
                         break;
                     case "5":
-                        activity = Jeu5.class;
+                        activity = Game5.class;
                         break;
                     case "6":
-                        activity = Jeu6.class;
+                        activity = Game6.class;
                         break;
                     default:
                         activity = MainActivity.class;
