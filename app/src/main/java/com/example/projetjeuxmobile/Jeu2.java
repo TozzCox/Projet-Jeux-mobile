@@ -23,7 +23,7 @@ public class Jeu2 extends AppCompatActivity {
 
         image = (AccelerometerJeu2) findViewById(R.id.kart);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        //timer();
+        timer();
     }
 
     @Override

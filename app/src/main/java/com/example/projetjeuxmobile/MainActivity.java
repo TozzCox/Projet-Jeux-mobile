@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 duel = true;
 
                 // adding elements
-                //tactile.add("2");
+                tactile.add("2");
                 tactile.add("3");
 
                 capteur.add("4");
