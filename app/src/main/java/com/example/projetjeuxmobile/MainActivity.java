@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 duel = false;
-                Intent intent = new Intent(MainActivity.this, Jeu1.class);
+                Intent intent = new Intent(MainActivity.this, Game1.class);
                 startActivity(intent);
             }
         });
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         btnJeu2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Jeu2.class);
+                Intent intent = new Intent(MainActivity.this, Game2.class);
                 startActivity(intent);
             }
         });
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 duel = false;
-                Intent intent = new Intent(MainActivity.this, Jeu3.class);
+                Intent intent = new Intent(MainActivity.this, Game3.class);
                 startActivity(intent);
             }
         });
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 duel = false;
-                Intent intent = new Intent(MainActivity.this, Jeu4.class);
+                Intent intent = new Intent(MainActivity.this, Game4.class);
                 startActivity(intent);
             }
         });
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 duel = false;
-                Intent intent = new Intent(MainActivity.this, Jeu5.class);
+                Intent intent = new Intent(MainActivity.this, Game5.class);
                 startActivity(intent);
             }
         });
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 duel = false;
-                Intent intent = new Intent(MainActivity.this, Jeu6.class);
+                Intent intent = new Intent(MainActivity.this, Game6.class);
                 startActivity(intent);
             }
         });

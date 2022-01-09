@@ -23,6 +23,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetJeuxMobile">
         <activity
+            android:name=".Game5"
+            android:exported="false" />
+        <activity
+            android:name=".Game4"
+            android:exported="false" />
+        <activity
+            android:name=".Game3"
+            android:exported="false" />
+        <activity
+            android:name=".Game2"
+            android:exported="false" />
+        <activity
+            android:name=".Game1"
+            android:exported="false" />
+        <activity
             android:name=".Jeu6"
             android:exported="false" />
         <activity

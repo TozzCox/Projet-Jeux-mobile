@@ -41,7 +41,7 @@
             android:layout_alignParentEnd="true"
             android:text="00:20"
             android:textColor="@color/black"
-            android:textSize="37sp"/>
+            android:textSize="37sp" />
 
         <TextView
             android:id="@+id/textQuestion"
