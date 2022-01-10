@@ -24,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static Boolean duel = false;
-    public static int duelScore = 0;
+    public static int duelScoreServer;
+    public static int duelScoreClient;
     ArrayList<String> tactile = new ArrayList<String>();
     ArrayList<String> capteur = new ArrayList<String>();
     public static ArrayList<String> list_game = new ArrayList<String>();
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        duelScoreServer = 0;
+        duelScoreClient = 0;
 
         btnJeu1 = (Button) findViewById(R.id.btnJeu1);
         btnJeu1.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         btnJeu2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                duel = false;
                 Intent intent = new Intent(MainActivity.this, Game2.class);
                 startActivity(intent);
             }
@@ -102,23 +107,34 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 duel = true;
 
-                // adding elements
-                tactile.add("2");
-                tactile.add("3");
+                while(!capteur.isEmpty()){
+                    capteur.remove(0);
+                }
+                while(!tactile.isEmpty()){
+                    tactile.remove(0);
+                }
+                while(!list_game.isEmpty()){
+                    list_game.remove(0);
+                }
 
-                capteur.add("4");
-                //capteur.add("5");
-                //capteur.add("6");
+                // adding elements
+                capteur.add("1");
+                capteur.add("2");
+                tactile.add("3");
+                //capteur.add("4");
+                //tactile.add("5"); //Comment envoyer la réponse de l'adversaire en P2P //jeu du morpion
+                tactile.add("6");
 
                 String tactile_game = tactile.get(new Random().nextInt(tactile.size()));
                 String capteur_game = capteur.get(new Random().nextInt(capteur.size()));
 
-                list_game.add("1");
+                list_game.add("4"); //quiz
                 list_game.add(tactile_game);
                 list_game.add(capteur_game);
-                Log.d(list_game.get(0), list_game.get(1));
-                Log.d(list_game.get(2), list_game.get(2));
+                Log.d("liste des jeux ",list_game.get(0) + " " + list_game.get(1) + list_game.get(2));
 
+                //Log.d(list_game.get(0), list_game.get(1));
+                //Log.d(list_game.get(2), list_game.get(2));
 
                 String current_game = list_game.get(new Random().nextInt(list_game.size()));
                 list_game.remove(current_game);
@@ -162,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, Historique.class);
+                intent.putExtra("scoreJeu1", getIntent().getIntExtra("scoreJeu1", 0));
                 startActivity(intent);
             }
         });
