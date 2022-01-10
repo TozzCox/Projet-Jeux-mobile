@@ -2,18 +2,25 @@ package com.example.projetjeuxmobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 public class Historique extends AppCompatActivity {
 
+    TextView scoreJeu1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historique);
+
+        scoreJeu1 = findViewById(R.id.myRecordJeu1);
+        int score = getIntent().getIntExtra("scoreJeu1", 0);
+        scoreJeu1.setText(score+"");
     }
 
-    //Get my record
+    /*//Get my record
     public TextView getMyScoreJeu1Id(){
         return findViewById(R.id.myRecordJeu1);
     }
@@ -52,5 +59,5 @@ public class Historique extends AppCompatActivity {
     public TextView getOpponentScoreJeu6Id(){
         return findViewById(R.id.opponentRecordJeu6);
     }
-
+*/
 }
