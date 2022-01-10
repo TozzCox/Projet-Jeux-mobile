@@ -45,9 +45,18 @@ public class Jeu2 extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                if(MainActivity.duel){
+                    if(P2P.isHost){
+                        MainActivity.duelScoreServer += image.getScore();
+                    }else{
+                        MainActivity.duelScoreClient += image.getScore();
+                    }
+                }
+
                 if (MainActivity.list_game.size()>0){
                     String current_game = MainActivity.list_game.get(new Random().nextInt(MainActivity.list_game.size()));
                     MainActivity.list_game.remove(current_game);
+
 
 
                     Class activity = null;

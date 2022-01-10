@@ -35,7 +35,7 @@ public class Accelerometer extends View implements SensorEventListener {
     private int holeX;
     private int holeY;
     private Random rdm = new Random();
-    private int score = 0;
+    public static int score = 0;
 
     private CountDownTimer countDownTimer;
     String time = "0";
@@ -84,25 +84,8 @@ public class Accelerometer extends View implements SensorEventListener {
             @Override
             public void onFinish() {
                 Toast.makeText(getContext(), "Votre score : " + score, Toast.LENGTH_LONG).show();
-
-
-                /*if(listScore.isEmpty()){
-                    //la liste est vide
-                    listScore.add(score);//mon record
-                    listScore.add(score);//tous records confondus
-                    myScoreHistorique.getMyScoreJeu1Id().setText(score);
-                    opponentRecordHistorique.getOpponentScoreJeu1Id().setText(score);
-                }else if(score > listScore.get(1)){
-                    //j'ai battu tous les scores confondus
-                    listScore.set(0, score);//mon record
-                    listScore.set(1, score);//record global
-                    myScoreHistorique.getMyScoreJeu1Id().setText(score);
-                    opponentRecordHistorique.getOpponentScoreJeu1Id().setText(score);
-                }else if(score <= listScore.get(1) && score >= listScore.get(0)){
-                    //j'ai battu mon record mais pas tous les records confondus
-                    listScore.set(0,score);//mon record
-                    myScoreHistorique.getMyScoreJeu1Id().setText(score);
-                }*/
+                Intent i = new Intent();
+                i.putExtra("scoreJeu1", ""+score);
             }
         }.start();
     }
@@ -158,5 +141,9 @@ public class Accelerometer extends View implements SensorEventListener {
 
         //rafraichissement de l'écran
         this.invalidate();
+    }
+
+    public int getScore(){
+        return score;
     }
 }

@@ -131,7 +131,12 @@ public class QuizActivity extends AppCompatActivity {
         }else {
             //finish();
             if (MainActivity.duel ==true){
-                MainActivity.duelScore += score;
+
+                if(P2P.isHost){
+                    MainActivity.duelScoreServer += score;
+                }else{
+                    MainActivity.duelScoreClient += score;
+                }
 
                 if (MainActivity.list_game.size()>0){
                     String current_game = MainActivity.list_game.get(new Random().nextInt(MainActivity.list_game.size()));

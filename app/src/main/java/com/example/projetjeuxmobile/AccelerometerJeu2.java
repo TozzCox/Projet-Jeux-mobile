@@ -195,4 +195,8 @@ public class AccelerometerJeu2 extends View implements SensorEventListener {
         //rafraichissement de l'écran
         this.invalidate();
     }
+
+    public int getScore(){
+        return score;
+    }
 }

@@ -80,13 +80,13 @@ public class Jeu3 extends AppCompatActivity {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        if(currentScore == 5){
+                        if(currentScore == 3){
                             troll1.setVisibility(View.VISIBLE);
-                        }else if(currentScore == 7) {
+                        }else if(currentScore == 5) {
                             troll2.setVisibility(View.VISIBLE);
-                        }else if(currentScore == 9) {
+                        }else if(currentScore == 7) {
                             troll3.setVisibility(View.VISIBLE);
-                        }else if(currentScore == 11) {
+                        }else if(currentScore == 9) {
                             troll4.setVisibility(View.VISIBLE);
                         }
 
@@ -160,7 +160,12 @@ public class Jeu3 extends AppCompatActivity {
             public void onFinish() {
                 Toast.makeText(getApplicationContext(), "Votre score : " + currentScore, Toast.LENGTH_LONG).show();
                 if (MainActivity.duel ==true){
-                    MainActivity.duelScore = currentScore;
+                    if(P2P.isHost){
+                        MainActivity.duelScoreServer += currentScore;
+                    }else{
+                        MainActivity.duelScoreClient += currentScore;
+                    }
+
                     if (MainActivity.list_game.size()>0){
                         String current_game = MainActivity.list_game.get(new Random().nextInt(MainActivity.list_game.size()));
                         MainActivity.list_game.remove(current_game);

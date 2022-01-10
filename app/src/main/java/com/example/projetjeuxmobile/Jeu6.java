@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Jeu6 extends AppCompatActivity {
 
@@ -20,7 +22,7 @@ public class Jeu6 extends AppCompatActivity {
     ImageView arrow;
     TextView scoreDisplay;
     SwipeListener swipeListener;
-    int score;
+    public static int score;
     int value = 0;
     Random rdm = new Random();
 
@@ -104,6 +106,22 @@ public class Jeu6 extends AppCompatActivity {
                                     arrow.setRotation(value*90);
                                     scoreDisplay.setText("Score : " + score);
                                     if(score==20){
+                                        //finish
+                                        if(MainActivity.duel) {
+                                            ExecutorService executor = Executors.newSingleThreadExecutor();
+                                            executor.execute(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if (P2P.isHost) {
+                                                        P2P.serverClass.write("stop".getBytes());
+                                                    } else {
+                                                        MainActivity.duelScoreClient += score;
+                                                        P2P.clientClass.write("stop".getBytes());
+                                                    }
+                                                }
+                                            });
+                                        }
+
                                         Intent intent = new Intent(Jeu6.this, MainActivity.class);
                                         startActivity(intent);
                                     }

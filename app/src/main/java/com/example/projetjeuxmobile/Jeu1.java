@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,14 @@ public class Jeu1 extends AppCompatActivity{
             public void onFinish() {
 
                 if (MainActivity.duel == true){
+
+                    //updating score for each opponent
+                    if(P2P.isHost){
+                        MainActivity.duelScoreServer += image.getScore();
+                    }else{
+                        MainActivity.duelScoreClient += image.getScore();
+                    }
+
                     if (MainActivity.list_game.size()>0){
                         String current_game = MainActivity.list_game.get(new Random().nextInt(MainActivity.list_game.size()));
                         MainActivity.list_game.remove(current_game);
@@ -92,6 +101,8 @@ public class Jeu1 extends AppCompatActivity{
 
                 }else {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Log.d("scoreJeu1", image.getScore() + " c'est le score");
+                    intent.putExtra("scoreJeu1", image.getScore());
                     startActivity(intent);
                 }
 

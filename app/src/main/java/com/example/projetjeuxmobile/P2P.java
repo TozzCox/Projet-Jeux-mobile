@@ -56,10 +56,10 @@ public class P2P extends AppCompatActivity {
 
     Socket socket;
 
-    ServerClass serverClass;
-    ClientClass clientClass;
+    public static ServerClass serverClass;
+    public static ClientClass clientClass;
 
-    boolean isHost;
+    public static boolean isHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,6 +261,9 @@ public class P2P extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         String tempMsg = new String(buffer, 0, finalBytes);
+                                        if(tempMsg.equals("stop")){
+                                            MainActivity.duelScoreServer += Jeu6.score;
+                                        }
                                         messageTextView.setText(tempMsg);
                                     }
                                 });
@@ -321,6 +324,9 @@ public class P2P extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         String tempMsg = new String(buffer, 0, finalBytes);
+                                        if(tempMsg.equals("stop")){
+                                            MainActivity.duelScoreClient += Jeu6.score;
+                                        }
                                         messageTextView.setText(tempMsg);
                                     }
                                 });
