@@ -322,13 +322,30 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
         }else{
             activePlayer = !activePlayer;
         }
-        if(playerOneScoreCount > playerTwoScoreCount){
-            playerStaus.setText("player One is Winning");
-        }else if(playerOneScoreCount < playerTwoScoreCount){
-            playerStaus.setText("player Two is Winning");
-        } else {
+
+
+        if(playerOneScoreCount+playerTwoScoreCount < 3){
+            if(playerOneScoreCount > playerTwoScoreCount){
+                playerStaus.setText("player One is Winning");
+            }else if(playerOneScoreCount < playerTwoScoreCount){
+                playerStaus.setText("player Two is Winning");
+            } else {
+                playerStaus.setText("");
+            }
+        }else {
+            playAgain();
+            playerOneScoreCount =0;
+            playerTwoScoreCount =0;
             playerStaus.setText("");
+            updatPlayerScore();
+
+            if(playerOneScoreCount > playerTwoScoreCount){
+                Toast.makeText(this, "player One Won", Toast.LENGTH_LONG).show();
+            }else if(playerOneScoreCount < playerTwoScoreCount){
+                Toast.makeText(this, "player Two Won", Toast.LENGTH_LONG).show();
+            }
         }
+
         resetGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
