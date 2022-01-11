@@ -129,23 +129,21 @@ public class P2P extends AppCompatActivity {
         });
 
         playButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                //String msg = typeMsg.getText().toString();
-                chooseActivity();
-                /*String list = "";
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(list_game!=null && isHost){
+                            String list = chooseActivity();
+                            serverClass.write(list.getBytes());
+                        }else if (list_game!=null && !isHost){
 
-                for(int i = 0; i<3; i++){
-                    list += list_game.get(i);
-                }
-                */String list = list_game.get(0)+list_game.get(1)+list_game.get(2);
-                serverClass.write(list.getBytes());
-
-/*                serverClass.write("ok".getBytes());
-                Intent intent = new Intent(P2P.this, launchActivity());
-                startActivity(intent);*/
-                //serverClass.write(msg.getBytes());
-
+                        }
+                    }
+                });
             }
         });
     }
@@ -333,23 +331,38 @@ public class P2P extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         String tempMsg = new String(buffer, 0, finalBytes);
-                                        if(tempMsg.equals("stop")){
-                                            //Corresponding "stop" sent by Jeu6
-                                            MainActivity.duelScoreClient += Jeu6.score;
+
+                                        switch(tempMsg) {
+                                            case "stop":
+                                                //Corresponding "stop" sent by Jeu6
+                                                MainActivity.duelScoreClient += Jeu6.score;
+                                                break;
+                                            case "431":
+                                                test.setText(tempMsg);
+                                                break;
+                                            case "432":
+                                                test.setText(tempMsg);
+                                                break;
+                                            case "451":
+                                                test.setText(tempMsg);
+                                                break;
+                                            case "452":
+                                                test.setText(tempMsg);
+                                                break;
+                                            case "461":
+                                                test.setText(tempMsg);
+                                                break;
+                                            case "462":
+                                                test.setText(tempMsg);
+                                                break;
+                                            case "ok":
+                                                //initialization of games
+                                                test.setText("j'ai reçu");
+                                            /*Intent intent = new Intent(P2P.this, launchActivity());
+                                            startActivity(intent);*/
+                                                break;
                                         }
 
-                                        if(tempMsg.equals("431") || tempMsg.equals("432") || tempMsg.equals("451") || tempMsg.equals("452") || tempMsg.equals("461") || tempMsg.equals("462")) {
-                                            for(int i = 0; i<3; i++){
-                                                list_game.add(""+tempMsg.charAt(i));
-                                            }
-                                            test.setText(tempMsg);
-                                        }
-
-                                        //initialization of games
-                                        if(list_game.size() == 3 && tempMsg.equals("ok")){
-                                            Intent intent = new Intent(P2P.this, launchActivity());
-                                            startActivity(intent);
-                                        }
                                     }
                                 });
                             }
@@ -362,7 +375,7 @@ public class P2P extends AppCompatActivity {
         }
     }
 
-    public void chooseActivity() {
+    public String chooseActivity() {
 
         ArrayList<String> tactile = new ArrayList<String>();
         ArrayList<String> capteur = new ArrayList<String>();
@@ -387,7 +400,7 @@ public class P2P extends AppCompatActivity {
         list_game.add(capteur_game);
         //Log.d("liste des jeux ", list_game.get(0) + " " + list_game.get(1) + list_game.get(2));
 
-        test.setText(list_game.get(0)+list_game.get(1)+list_game.get(2));
+        return list_game.get(0)+list_game.get(1)+list_game.get(2);
     }
 
     public Class launchActivity(){
