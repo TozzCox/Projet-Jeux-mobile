@@ -269,8 +269,14 @@ public class P2P extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         String tempMsg = new String(buffer, 0, finalBytes);
-                                        if(tempMsg.equals("stop")){
-                                            MainActivity.duelScoreServer += Jeu6.score;
+                                        switch(tempMsg){
+                                            case "stop":
+                                                MainActivity.duelScoreServer += Jeu6.score;
+                                                break;
+                                            case "pret":
+                                                Intent intent = new Intent(P2P.this, launchActivity());
+                                                startActivity(intent);
+                                                break;
                                         }
                                     }
                                 });
@@ -338,22 +344,34 @@ public class P2P extends AppCompatActivity {
                                                 MainActivity.duelScoreClient += Jeu6.score;
                                                 break;
                                             case "431":
-                                                test.setText(tempMsg);
+                                                list_game.add("4");
+                                                list_game.add("3");
+                                                list_game.add("1");
                                                 break;
                                             case "432":
-                                                test.setText(tempMsg);
+                                                list_game.add("4");
+                                                list_game.add("3");
+                                                list_game.add("2");
                                                 break;
                                             case "451":
-                                                test.setText(tempMsg);
+                                                list_game.add("4");
+                                                list_game.add("5");
+                                                list_game.add("1");
                                                 break;
                                             case "452":
-                                                test.setText(tempMsg);
+                                                list_game.add("4");
+                                                list_game.add("5");
+                                                list_game.add("2");
                                                 break;
                                             case "461":
-                                                test.setText(tempMsg);
+                                                list_game.add("4");
+                                                list_game.add("6");
+                                                list_game.add("1");
                                                 break;
                                             case "462":
-                                                test.setText(tempMsg);
+                                                list_game.add("4");
+                                                list_game.add("6");
+                                                list_game.add("2");
                                                 break;
                                             case "ok":
                                                 //initialization of games
@@ -362,6 +380,10 @@ public class P2P extends AppCompatActivity {
                                             startActivity(intent);*/
                                                 break;
                                         }
+
+                                        clientClass.write("pret".getBytes());
+                                        Intent intent = new Intent(P2P.this, launchActivity());
+                                        startActivity(intent);
 
                                     }
                                 });

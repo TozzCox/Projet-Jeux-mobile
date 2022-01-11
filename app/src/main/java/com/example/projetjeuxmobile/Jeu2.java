@@ -76,7 +76,7 @@ public class Jeu2 extends AppCompatActivity {
                                     activity = Game5.class;
                                     break;
                                 case "6":
-                                    activity = Game6.class;
+                                    activity = Jeu6.class;
                                     break;
                                 default:
                                     activity = MainActivity.class;
@@ -119,7 +119,7 @@ public class Jeu2 extends AppCompatActivity {
                                     activity = Game5.class;
                                     break;
                                 case "6":
-                                    activity = Game6.class;
+                                    activity = Jeu6.class;
                                     break;
                                 default:
                                     activity = MainActivity.class;
