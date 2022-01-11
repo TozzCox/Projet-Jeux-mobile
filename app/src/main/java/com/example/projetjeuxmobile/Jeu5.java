@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.nio.charset.StandardCharsets;
 
 public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
 
@@ -18,6 +21,8 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
 
     private int playerOneScoreCount, playerTwoScoreCount, rountCount;
     boolean activePlayer;
+
+    public int tour = 0;
 
     int [] gameState = {2,2,2,2,2,2,2,2,2};
 
@@ -57,16 +62,243 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
         }
         String buttonID = view.getResources().getResourceEntryName(view.getId());
         int gameStatePointer = Integer.parseInt(buttonID.substring(buttonID.length()-1, buttonID.length())); //2
+        Log.d("BoutonID:",buttonID);
 
-        if (activePlayer){
-            ((Button)view).setText("X");
-            ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
-            gameState[gameStatePointer] = 0;
-        }else{
-            ((Button)view).setText("0");
-            ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
-            gameState[gameStatePointer] = 1;
+        if (MainActivity.duel==false){
+            if (activePlayer){
+                switch(buttonID) {
+                    case "btn_0":
+                        buttons[0].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        break;
+
+                    case "btn_1":
+                        buttons[1].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        break;
+                    case "btn_2":
+                        buttons[2].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        break;
+                    case "btn_3":
+                        buttons[3].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        break;
+                    case "btn_4":
+                        buttons[4].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        break;
+                    case "btn_5":
+                        buttons[5].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        break;
+                    case "btn_6":
+                        buttons[6].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        break;
+                    case "btn_7":
+                        buttons[7].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        break;
+                    case "btn_8":
+                        buttons[8].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        break;
+                    default:
+                        break;
+                }
+
+            }else{
+                switch(buttonID) {
+                    case "btn_0":
+                        buttons[0].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        break;
+
+                    case "btn_1":
+                        buttons[1].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        break;
+                    case "btn_2":
+                        buttons[2].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        break;
+                    case "btn_3":
+                        buttons[3].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        break;
+                    case "btn_4":
+                        buttons[4].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        break;
+                    case "btn_5":
+                        buttons[5].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        break;
+                    case "btn_6":
+                        buttons[6].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        break;
+                    case "btn_7":
+                        buttons[7].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        break;
+                    case "btn_8":
+                        buttons[8].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        } else {
+            if (P2P.isHost ==true && tour%2 ==0){
+                P2P.serverClass.write(buttonID.getBytes());
+                switch(buttonID) {
+                    case "btn_0":
+                        buttons[0].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        tour ++;
+                        break;
+
+                    case "btn_1":
+                        buttons[1].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        tour ++;
+                        break;
+                    case "btn_2":
+                        buttons[2].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        tour ++;
+                        break;
+                    case "btn_3":
+                        buttons[3].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        tour ++;
+                        break;
+                    case "btn_4":
+                        buttons[4].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        tour ++;
+                        break;
+                    case "btn_5":
+                        buttons[5].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        tour ++;
+                        break;
+                    case "btn_6":
+                        buttons[6].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        tour ++;
+                        break;
+                    case "btn_7":
+                        buttons[7].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        tour ++;
+                        break;
+                    case "btn_8":
+                        buttons[8].setText("X");
+                        ((Button)view).setTextColor(Color.parseColor("#FFC34A"));
+                        gameState[gameStatePointer] = 0;
+                        tour ++;
+                        break;
+                    default:
+                        break;
+                }
+                // transferer ma posiotion
+
+            }else if (P2P.isHost=false && tour%2 ==1) {
+                switch(buttonID) {
+                    case "btn_0":
+                        buttons[0].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        tour ++;
+                        break;
+
+                    case "btn_1":
+                        buttons[1].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        tour ++;
+                        break;
+                    case "btn_2":
+                        buttons[2].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        tour ++;
+                        break;
+                    case "btn_3":
+                        buttons[3].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        tour ++;
+                        break;
+                    case "btn_4":
+                        buttons[4].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        tour ++;
+                        break;
+                    case "btn_5":
+                        buttons[5].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        tour ++;
+                        break;
+                    case "btn_6":
+                        buttons[6].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        tour ++;
+                        break;
+                    case "btn_7":
+                        buttons[7].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        tour ++;
+                        break;
+                    case "btn_8":
+                        buttons[8].setText("0");
+                        ((Button)view).setTextColor(Color.parseColor("#70FFEA"));
+                        gameState[gameStatePointer] = 1;
+                        tour ++;
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
         }
+
         rountCount++;
 
 
@@ -90,13 +322,30 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
         }else{
             activePlayer = !activePlayer;
         }
-        if(playerOneScoreCount > playerTwoScoreCount){
-            playerStaus.setText("player One is Winning");
-        }else if(playerOneScoreCount < playerTwoScoreCount){
-            playerStaus.setText("player Two is Winning");
-        } else {
+
+
+        if(playerOneScoreCount+playerTwoScoreCount < 3){
+            if(playerOneScoreCount > playerTwoScoreCount){
+                playerStaus.setText("player One is Winning");
+            }else if(playerOneScoreCount < playerTwoScoreCount){
+                playerStaus.setText("player Two is Winning");
+            } else {
+                playerStaus.setText("");
+            }
+        }else {
+            playAgain();
+            playerOneScoreCount =0;
+            playerTwoScoreCount =0;
             playerStaus.setText("");
+            updatPlayerScore();
+
+            if(playerOneScoreCount > playerTwoScoreCount){
+                Toast.makeText(this, "player One Won", Toast.LENGTH_LONG).show();
+            }else if(playerOneScoreCount < playerTwoScoreCount){
+                Toast.makeText(this, "player Two Won", Toast.LENGTH_LONG).show();
+            }
         }
+
         resetGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

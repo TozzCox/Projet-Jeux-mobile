@@ -3,6 +3,7 @@ package com.example.projetjeuxmobile;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnDuel;
     private Button btnHistorique;
 
+    private MediaPlayer mediaPlayer;
+
 
     public static Boolean duel = false;
     public static int duelScoreServer;
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.loser1);
 
         duelScoreServer = 0;
         duelScoreClient = 0;
@@ -120,5 +125,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void playSound(View view){
+       mediaPlayer.start();
     }
 }
