@@ -3,6 +3,7 @@ package com.example.projetjeuxmobile;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,8 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
     private TextView playerOneScore, playerTwoScore, playerStaus;
     private Button[] buttons = new Button[9];
     private Button resetGame;
+
+    private MediaPlayer mediaPlayer;
 
     private int playerOneScoreCount, playerTwoScoreCount, rountCount;
     boolean activePlayer;
@@ -36,6 +39,8 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jeu5);
+
+        this.mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.loser1);
 
         playerOneScore = (TextView) findViewById(R.id.playerOneScore);
         playerTwoScore = (TextView) findViewById(R.id.playerTwoScore);
@@ -333,6 +338,8 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
                 playerStaus.setText("");
             }
         }else {
+
+            playSound();
             playAgain();
             playerOneScoreCount =0;
             playerTwoScoreCount =0;
@@ -384,5 +391,9 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
             buttons[i].setText("");
 
         }
+    }
+
+    public void playSound(){
+        mediaPlayer.start();
     }
 }
