@@ -26,10 +26,8 @@ public class MainActivity extends AppCompatActivity {
     public static Boolean duel = false;
     public static int duelScoreServer;
     public static int duelScoreClient;
-    ArrayList<String> tactile = new ArrayList<String>();
-    ArrayList<String> capteur = new ArrayList<String>();
-    public static ArrayList<String> list_game = new ArrayList<String>();
 
+    public static Class activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,69 +104,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 duel = true;
-
-                while(!capteur.isEmpty()){
-                    capteur.remove(0);
-                }
-                while(!tactile.isEmpty()){
-                    tactile.remove(0);
-                }
-                while(!list_game.isEmpty()){
-                    list_game.remove(0);
-                }
-
-                // adding elements
-                capteur.add("1");
-                capteur.add("2");
-                tactile.add("3");
-                //capteur.add("4");
-                //tactile.add("5"); //Comment envoyer la réponse de l'adversaire en P2P //jeu du morpion
-                tactile.add("6");
-
-                String tactile_game = tactile.get(new Random().nextInt(tactile.size()));
-                String capteur_game = capteur.get(new Random().nextInt(capteur.size()));
-
-                list_game.add("4"); //quiz
-                list_game.add(tactile_game);
-                list_game.add(capteur_game);
-                Log.d("liste des jeux ",list_game.get(0) + " " + list_game.get(1) + list_game.get(2));
-
-                //Log.d(list_game.get(0), list_game.get(1));
-                //Log.d(list_game.get(2), list_game.get(2));
-
-                String current_game = list_game.get(new Random().nextInt(list_game.size()));
-                list_game.remove(current_game);
-
-                Class activity = null;
-
-
-                switch(current_game) {
-                    case "1":
-
-                        // E.g., if the output is 1, the activity we will open is ActivityOne.class
-                        activity = Game1.class;
-                        break;
-                    case "2":
-                        activity = Game2.class;
-                        break;
-                    case "3":
-                        activity = Game3.class;
-                        break;
-                    case "4":
-                        activity = Jeu4.class;
-                        break;
-                    case "5":
-                        activity = Game5.class;
-                        break;
-                    case "6":
-                        activity = Game6.class;
-                        break;
-                    default:
-                        activity = MainActivity.class;
-                        break;
-                }
                 // We use intents to start activities
-                Intent intent = new Intent(getBaseContext(), activity);
+                //getBaseContext() recupère le contexte de l'activité où l'on est
+                Intent intent = new Intent(getBaseContext(), P2P.class);
                 startActivity(intent);
             }
         });

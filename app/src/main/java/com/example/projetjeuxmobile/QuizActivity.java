@@ -138,9 +138,9 @@ public class QuizActivity extends AppCompatActivity {
                     MainActivity.duelScoreClient += score;
                 }
 
-                if (MainActivity.list_game.size()>0){
-                    String current_game = MainActivity.list_game.get(new Random().nextInt(MainActivity.list_game.size()));
-                    MainActivity.list_game.remove(current_game);
+                if (P2P.list_game.size()>0){
+                    String current_game = P2P.list_game.get(0);
+                    P2P.list_game.remove(current_game);
 
 
                     Class activity = null;

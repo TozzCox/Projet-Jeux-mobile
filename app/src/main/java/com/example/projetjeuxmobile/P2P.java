@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -15,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,16 +35,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class P2P extends AppCompatActivity {
 
-    TextView connectionStatus, messageTextView;
+    TextView connectionStatus, test;
     Button discoverButton;
     ListView listView;
-    EditText typeMsg;
-    ImageButton sendButton;
+    Button playButton;
 
     WifiP2pManager manager;
     WifiP2pManager.Channel channel;
@@ -60,6 +62,8 @@ public class P2P extends AppCompatActivity {
     public static ClientClass clientClass;
 
     public static boolean isHost;
+
+    public static ArrayList<String> list_game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,21 +128,24 @@ public class P2P extends AppCompatActivity {
             }
         });
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ExecutorService executor = Executors.newSingleThreadExecutor();
-                String msg = typeMsg.getText().toString();
-                executor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(msg!=null && isHost){
-                            serverClass.write(msg.getBytes());
-                        }else if (msg!=null && !isHost){
-                            clientClass.write(msg.getBytes());
-                        }
-                    }
-                });
+                //String msg = typeMsg.getText().toString();
+                chooseActivity();
+                /*String list = "";
+
+                for(int i = 0; i<3; i++){
+                    list += list_game.get(i);
+                }
+                */String list = list_game.get(0)+list_game.get(1)+list_game.get(2);
+                serverClass.write(list.getBytes());
+
+/*                serverClass.write("ok".getBytes());
+                Intent intent = new Intent(P2P.this, launchActivity());
+                startActivity(intent);*/
+                //serverClass.write(msg.getBytes());
+
             }
         });
     }
@@ -146,11 +153,13 @@ public class P2P extends AppCompatActivity {
     @SuppressLint("WrongViewCast")
     private void initWork(){
         connectionStatus = findViewById(R.id.connection_status);
-        messageTextView = findViewById(R.id.messageTextView);
         discoverButton = findViewById(R.id.buttonDiscover);
         listView = findViewById(R.id.listView);
-        typeMsg = findViewById(R.id.editTextTypeMsg);
-        sendButton = findViewById(R.id.sendButton);
+        playButton = findViewById(R.id.playButton);
+
+        test = findViewById(R.id.test);
+
+        list_game = new ArrayList<String>();
 
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
@@ -197,6 +206,7 @@ public class P2P extends AppCompatActivity {
                 connectionStatus.setText("Host");
                 isHost = true;
                 serverClass = new ServerClass();
+                playButton.setVisibility(View.VISIBLE);
                 serverClass.start();
             }else if(wifiP2pInfo.groupFormed){
                 connectionStatus.setText("Client");
@@ -264,7 +274,6 @@ public class P2P extends AppCompatActivity {
                                         if(tempMsg.equals("stop")){
                                             MainActivity.duelScoreServer += Jeu6.score;
                                         }
-                                        messageTextView.setText(tempMsg);
                                     }
                                 });
                             }
@@ -325,9 +334,22 @@ public class P2P extends AppCompatActivity {
                                     public void run() {
                                         String tempMsg = new String(buffer, 0, finalBytes);
                                         if(tempMsg.equals("stop")){
+                                            //Corresponding "stop" sent by Jeu6
                                             MainActivity.duelScoreClient += Jeu6.score;
                                         }
-                                        messageTextView.setText(tempMsg);
+
+                                        if(tempMsg.equals("431") || tempMsg.equals("432") || tempMsg.equals("451") || tempMsg.equals("452") || tempMsg.equals("461") || tempMsg.equals("462")) {
+                                            for(int i = 0; i<3; i++){
+                                                list_game.add(""+tempMsg.charAt(i));
+                                            }
+                                            test.setText(tempMsg);
+                                        }
+
+                                        //initialization of games
+                                        if(list_game.size() == 3 && tempMsg.equals("ok")){
+                                            Intent intent = new Intent(P2P.this, launchActivity());
+                                            startActivity(intent);
+                                        }
                                     }
                                 });
                             }
@@ -338,7 +360,67 @@ public class P2P extends AppCompatActivity {
                 }
             });
         }
+    }
 
+    public void chooseActivity() {
 
+        ArrayList<String> tactile = new ArrayList<String>();
+        ArrayList<String> capteur = new ArrayList<String>();
+
+        while (!list_game.isEmpty()) {
+            list_game.remove(0);
+        }
+
+        // adding elements
+        capteur.add("1"); //balle de golf
+        capteur.add("2"); //kart
+        tactile.add("3"); //cible
+        //capteur.add("4"); //quiz
+        //tactile.add("5"); //Comment envoyer la réponse de l'adversaire en P2P //jeu du morpion
+        //tactile.add("6"); //flèche
+
+        String tactile_game = tactile.get(new Random().nextInt(tactile.size()));
+        String capteur_game = capteur.get(new Random().nextInt(capteur.size()));
+
+        list_game.add("4"); //quiz
+        list_game.add(tactile_game);
+        list_game.add(capteur_game);
+        //Log.d("liste des jeux ", list_game.get(0) + " " + list_game.get(1) + list_game.get(2));
+
+        test.setText(list_game.get(0)+list_game.get(1)+list_game.get(2));
+    }
+
+    public Class launchActivity(){
+
+        Class activity = null;
+        String current_game = list_game.get(0);
+        list_game.remove(current_game);
+
+        switch (current_game) {
+            case "1":
+                // E.g., if the output is 1, the activity we will open is ActivityOne.class
+                activity = Game1.class;
+                break;
+            case "2":
+                activity = Game2.class;
+                break;
+            case "3":
+                activity = Game3.class;
+                break;
+            case "4":
+                activity = Jeu4.class;
+                break;
+            case "5":
+                activity = Game5.class;
+                break;
+            case "6":
+                activity = Game6.class;
+                break;
+            default:
+                activity = MainActivity.class;
+                break;
+        }
+
+        return activity;
     }
 }
