@@ -126,9 +126,18 @@ public class Jeu2 extends AppCompatActivity {
                                     break;
                             }
                             // We use intents to start activities
-                            Intent intent = new Intent(getBaseContext(), activity);
-                            startActivity(intent);
-                        } else {
+                            Intent intentActivity = new Intent(getBaseContext(), activity);
+                            startActivity(intentActivity);
+                             if(P2P.list_game.size() == 0) {
+                                 if (P2P.isHost) {
+                                     //P2P.serverClass.write("termine".getBytes());
+                                 } else {
+                                     //P2P.clientClass.write("termine".getBytes());
+                                 }
+                                 Intent intentScore = new Intent(getApplicationContext(), Scrore.class);
+                                 startActivity(intentScore);
+                             }
+                    }else {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         }

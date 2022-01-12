@@ -130,18 +130,19 @@ public class P2P extends AppCompatActivity {
         });
 
         playButton.setOnClickListener(new View.OnClickListener() {
-
+            String list = chooseActivity();
             @Override
             public void onClick(View view) {
                 ExecutorService executor = Executors.newSingleThreadExecutor();
                 executor.execute(new Runnable() {
                     @Override
                     public void run() {
-                        if(list_game!=null && isHost){
-                            String list = chooseActivity();
+                        if(isHost){
                             serverClass.write(list.getBytes());
-                        }else if (list_game!=null && !isHost){
-
+                            Intent intent = new Intent(getBaseContext(), launchActivity());
+                            startActivity(intent);
+                        }else{
+                            clientClass.write(list.getBytes());
                         }
                     }
                 });
@@ -278,6 +279,9 @@ public class P2P extends AppCompatActivity {
                                                 Intent intent = new Intent(P2P.this, launchActivity());
                                                 startActivity(intent);
                                                 break;
+                                            case "termine":
+                                                Scrore.scoreJoueur2.setText("Joueur 2 : " + MainActivity.duelScoreClient);
+                                                break;
                                         }
                                     }
                                 });
@@ -337,40 +341,55 @@ public class P2P extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         String tempMsg = new String(buffer, 0, finalBytes);
+                                        //test.setText(tempMsg);
 
-                                        switch(tempMsg) {
+                                        if(tempMsg.equals("341")){
+                                            list_game.add("3");
+                                            list_game.add("4");
+                                            list_game.add("1");
+                                            Intent intent = new Intent(getBaseContext(), launchActivity());
+                                            startActivity(intent);
+                                        }else if(tempMsg.equals("342")){
+                                            list_game.add("3");
+                                            list_game.add("4");
+                                            list_game.add("2");
+                                            Intent intent = new Intent(getBaseContext(), launchActivity());
+                                            startActivity(intent);
+                                        }
+                                        /*switch(tempMsg) {
                                             case "stop":
                                                 //Corresponding "stop" sent by Jeu6
                                                 MainActivity.duelScoreClient += Jeu6.score;
                                                 break;
-                                            case "431":
-                                                list_game.add("4");
+                                            case "341":
+                                                test.setText("j'ai recu");
                                                 list_game.add("3");
+                                                list_game.add("4");
                                                 list_game.add("1");
                                                 break;
-                                            case "432":
-                                                list_game.add("4");
+                                            case "342":
                                                 list_game.add("3");
+                                                list_game.add("4");
                                                 list_game.add("2");
                                                 break;
-                                            case "451":
-                                                list_game.add("4");
+                                            case "541":
                                                 list_game.add("5");
+                                                list_game.add("4");
                                                 list_game.add("1");
                                                 break;
-                                            case "452":
-                                                list_game.add("4");
+                                            case "542":
                                                 list_game.add("5");
+                                                list_game.add("4");
                                                 list_game.add("2");
                                                 break;
-                                            case "461":
-                                                list_game.add("4");
+                                            case "641":
                                                 list_game.add("6");
+                                                list_game.add("4");
                                                 list_game.add("1");
                                                 break;
-                                            case "462":
-                                                list_game.add("4");
+                                            case "642":
                                                 list_game.add("6");
+                                                list_game.add("4");
                                                 list_game.add("2");
                                                 break;
                                             case "btn_0":
@@ -495,14 +514,18 @@ public class P2P extends AppCompatActivity {
                                             case "ok":
                                                 //initialization of games
                                                 test.setText("j'ai reçu");
-                                            /*Intent intent = new Intent(P2P.this, launchActivity());
-                                            startActivity(intent);*/
+                                            Intent intent = new Intent(P2P.this, launchActivity());
+                                            startActivity(intent);
                                                 break;
+                                            case "termine":
+                                                Scrore.scoreJoueur1.setText("Joueur 1 : " + MainActivity.duelScoreServer);
+                                                break;
+
                                         }
 
                                         clientClass.write("pret".getBytes());
                                         Intent intent = new Intent(P2P.this, launchActivity());
-                                        startActivity(intent);
+                                        startActivity(intent);*/
 
                                     }
                                 });
@@ -530,17 +553,18 @@ public class P2P extends AppCompatActivity {
         capteur.add("2"); //kart
         tactile.add("3"); //cible
         //capteur.add("4"); //quiz
-        //tactile.add("5"); //Comment envoyer la réponse de l'adversaire en P2P //jeu du morpion
+        //tactile.add("5");  //jeu du morpion
         //tactile.add("6"); //flèche
 
         String tactile_game = tactile.get(new Random().nextInt(tactile.size()));
         String capteur_game = capteur.get(new Random().nextInt(capteur.size()));
 
-        list_game.add("4"); //quiz
         list_game.add(tactile_game);
+        list_game.add("4"); //quiz
         list_game.add(capteur_game);
         //Log.d("liste des jeux ", list_game.get(0) + " " + list_game.get(1) + list_game.get(2));
 
+        //test.setText(""+list_game.get(0)+list_game.get(1)+list_game.get(2));
         return list_game.get(0)+list_game.get(1)+list_game.get(2);
     }
 
@@ -568,7 +592,7 @@ public class P2P extends AppCompatActivity {
                 activity = Game5.class;
                 break;
             case "6":
-                activity = Game6.class;
+                activity = Jeu6.class;
                 break;
             default:
                 activity = MainActivity.class;
