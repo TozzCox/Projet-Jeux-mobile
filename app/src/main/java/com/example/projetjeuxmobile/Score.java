@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class Score extends AppCompatActivity {
 
-    TextView playerOneScore, playerTwoScrore;
+    public static TextView playerOneScore, playerTwoScrore;
     Button menu;
 
     public static TextView scoreJoueur1;

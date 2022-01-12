@@ -212,7 +212,7 @@ public class QuizActivity extends AppCompatActivity {
                 }
 
                 if (P2P.list_game.size()>0){
-                    String current_game = P2P.list_game.get(0);
+                   /* String current_game = P2P.list_game.get(0);
                     P2P.list_game.remove(current_game);
 
 
@@ -243,9 +243,9 @@ public class QuizActivity extends AppCompatActivity {
                         default:
                             activity = MainActivity.class;
                             break;
-                    }
+                    }*/
                     // We use intents to start activities
-                    Intent intent = new Intent(getBaseContext(), activity);
+                    Intent intent = new Intent(getBaseContext(), P2P.launchActivity());
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);

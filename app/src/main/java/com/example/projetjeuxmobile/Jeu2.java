@@ -7,9 +7,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Jeu2 extends AppCompatActivity {
 
@@ -49,27 +53,59 @@ public class Jeu2 extends AppCompatActivity {
                 if(MainActivity.duel){
                     if(P2P.isHost) {
                         MainActivity.duelScoreServer += image.getScore();
-                    }else {
-                        MainActivity.duelScoreClient += image.getScore();
-                    }
 
-                    if (P2P.list_game.size()>0){
+                        if (P2P.list_game.size()>0){
+                            Log.d("scoreServer" , ""+ MainActivity.duelScoreServer);
+                            Log.d("scoreClient" , ""+ MainActivity.duelScoreClient);
 
-                        for(int i = 0; i<3; i++){
-                            Log.d("list_game" , ""+ P2P.list_game.get(i));
+                            // We use intents to start activities
+                            Intent intentActivity = new Intent(getBaseContext(), P2P.launchActivity());
+                            startActivity(intentActivity);
+
+                        }else {
+                            Intent intent = new Intent(getBaseContext(), Score.class);
+                            startActivity(intent);
                         }
 
-                        // We use intents to start activities
-                        Intent intentActivity = new Intent(getBaseContext(), P2P.launchActivity());
-                        startActivity(intentActivity);
+                        ExecutorService executor = Executors.newSingleThreadExecutor();
+                        Handler handler = new Handler(Looper.getMainLooper());
+
+                        executor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                String scoreServer = "termine:"+MainActivity.duelScoreServer;
+                                P2P.serverClass.write(scoreServer.getBytes());
+                            }});
 
                     }else {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
+                        MainActivity.duelScoreClient += image.getScore();
+                        if (P2P.list_game.size()>0){
+                            Log.d("list_game_size" , ""+ P2P.list_game.size());
+
+                            // We use intents to start activities
+                            Intent intentActivity = new Intent(getBaseContext(), P2P.launchActivity());
+                            startActivity(intentActivity);
+
+                        }else {
+                            Intent intent = new Intent(getBaseContext(), Score.class);
+                            startActivity(intent);
+                        }
+
+                        ExecutorService executor = Executors.newSingleThreadExecutor();
+                        Handler handler = new Handler(Looper.getMainLooper());
+
+                        executor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                String scoreClient = "termine:"+MainActivity.duelScoreClient;
+                                P2P.clientClass.write(scoreClient.getBytes());
+                            }});
                     }
 
+
+
                 }else {
-                    Intent intent = new Intent(Jeu2.this, MainActivity.class);
+                    Intent intent = new Intent(Jeu2.this, Score.class);
                     startActivity(intent);
                 }
             }

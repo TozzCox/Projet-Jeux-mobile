@@ -139,7 +139,7 @@ public class P2P extends AppCompatActivity {
                     public void run() {
                         if(isHost){
                             list_game.add("3");
-                            list_game.add("4");
+                            //list_game.add("4");
                             list_game.add("2");
                             serverClass.write("start".getBytes());
                             Intent intent = new Intent(getBaseContext(), launchActivity());
@@ -274,6 +274,7 @@ public class P2P extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         String tempMsg = new String(buffer, 0, finalBytes);
+                                        String[] newTempMsg = tempMsg.split(":");
                                         switch(tempMsg){
                                             case "stop":
                                                 MainActivity.duelScoreServer += Jeu6.score;
@@ -286,6 +287,16 @@ public class P2P extends AppCompatActivity {
                                                 Score.scoreJoueur2.setText("Joueur 2 : " + MainActivity.duelScoreClient);
                                                 break;
                                         }
+
+                                        if(newTempMsg[0].equals("termine")){
+                                            MainActivity.duelScoreClient = Integer.parseInt(newTempMsg[1]);
+                                            Log.d("tempMsg",""+newTempMsg[1]);
+                                            //Score.playerOneScore.setText("Joueur 11 : " + MainActivity.duelScoreServer );
+                                            Score.playerTwoScrore.setText("Joueur 22 : " + newTempMsg[1] );
+                                            //comparer le score reçu avec le score du serveur
+                                        }
+
+                                        //MainActivity.duelScoreClient = Integer.parseInt(tempMsg);
                                     }
                                 });
                             }
@@ -345,6 +356,7 @@ public class P2P extends AppCompatActivity {
                                     public void run() {
                                         String tempMsg = new String(buffer, 0, finalBytes);
                                         //test.setText(tempMsg);
+                                        String[] newTempMsg = tempMsg.split(":");
 
                                         if(tempMsg.equals("341")){
                                             list_game.add("3");
@@ -372,10 +384,16 @@ public class P2P extends AppCompatActivity {
                                             startActivity(intent);
                                         }else if(tempMsg.equals("start")){
                                             list_game.add("3");
-                                            list_game.add("4");
+                                            //list_game.add("4");
                                             list_game.add("2");
                                             Intent intent = new Intent(getBaseContext(), launchActivity());
                                             startActivity(intent);
+                                        }else if(newTempMsg[0].equals("termine")){
+                                            MainActivity.duelScoreServer = Integer.parseInt(newTempMsg[1]);
+                                            Log.d("tempMsg", newTempMsg[1]+"");
+                                            Score.playerOneScore.setText("Joueur 11 : " + newTempMsg[1] );
+                                            //Score.playerTwoScrore.setText("Joueur 22 : " + MainActivity.duelScoreClient );
+                                            //comparer le score reçu avec le score du client
                                         }
 
 
@@ -629,7 +647,7 @@ public class P2P extends AppCompatActivity {
                 activity = Jeu6.class;
                 break;
             default:
-                activity = MainActivity.class;
+                activity = Score.class;
                 break;
         }
 
