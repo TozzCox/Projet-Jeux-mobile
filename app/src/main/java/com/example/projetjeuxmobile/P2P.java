@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
@@ -290,7 +291,6 @@ public class P2P extends AppCompatActivity {
         }
     }
 
-
     public class ClientClass extends Thread{
         String hostAdd;
         private InputStream inputStream;
@@ -373,6 +373,125 @@ public class P2P extends AppCompatActivity {
                                                 list_game.add("6");
                                                 list_game.add("2");
                                                 break;
+                                            case "btn_0":
+                                                if(P2P.isHost ==true){
+                                                    Jeu5.buttons[0].setText("X");
+                                                    Jeu5.buttons[0].setTextColor(Color.parseColor("#FFC34A"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+                                                } else if(P2P.isHost ==true){
+                                                    Jeu5.buttons[0].setText("0");
+                                                    Jeu5.buttons[0].setTextColor(Color.parseColor("#70FFEA"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+
+                                                }
+                                                break;case "btn_1":
+                                                if(P2P.isHost ==true){
+                                                    Jeu5.buttons[1].setText("X");
+                                                    Jeu5.buttons[1].setTextColor(Color.parseColor("#FFC34A"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+                                                } else if(P2P.isHost ==true){
+                                                    Jeu5.buttons[1].setText("0");
+                                                    Jeu5.buttons[1].setTextColor(Color.parseColor("#70FFEA"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+
+                                                }
+                                                break;case "btn_2":
+                                                if(P2P.isHost ==true){
+                                                    Jeu5.buttons[2].setText("X");
+                                                    Jeu5.buttons[2].setTextColor(Color.parseColor("#FFC34A"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+                                                } else if(P2P.isHost ==true){
+                                                    Jeu5.buttons[2].setText("0");
+                                                    Jeu5.buttons[2].setTextColor(Color.parseColor("#70FFEA"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+
+                                                }
+                                                break;case "btn_3":
+                                                if(P2P.isHost ==true){
+                                                    Jeu5.buttons[3].setText("X");
+                                                    Jeu5.buttons[3].setTextColor(Color.parseColor("#FFC34A"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+                                                } else if(P2P.isHost ==true){
+                                                    Jeu5.buttons[3].setText("0");
+                                                    Jeu5.buttons[3].setTextColor(Color.parseColor("#70FFEA"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+
+                                                }
+                                                break;case "btn_4":
+                                                if(P2P.isHost ==true){
+                                                    Jeu5.buttons[4].setText("X");
+                                                    Jeu5.buttons[4].setTextColor(Color.parseColor("#FFC34A"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+                                                } else if(P2P.isHost ==true){
+                                                    Jeu5.buttons[4].setText("0");
+                                                    Jeu5.buttons[4].setTextColor(Color.parseColor("#70FFEA"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+
+                                                }
+                                                break;case "btn_5":
+                                                if(P2P.isHost ==true){
+                                                    Jeu5.buttons[5].setText("X");
+                                                    Jeu5.buttons[5].setTextColor(Color.parseColor("#FFC34A"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+                                                } else if(P2P.isHost ==true){
+                                                    Jeu5.buttons[5].setText("0");
+                                                    Jeu5.buttons[5].setTextColor(Color.parseColor("#70FFEA"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+
+                                                }
+                                                break;case "btn_6":
+                                                if(P2P.isHost ==true){
+                                                    Jeu5.buttons[6].setText("X");
+                                                    Jeu5.buttons[6].setTextColor(Color.parseColor("#FFC34A"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+                                                } else if(P2P.isHost ==true){
+                                                    Jeu5.buttons[6].setText("0");
+                                                    Jeu5.buttons[6].setTextColor(Color.parseColor("#70FFEA"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+
+                                                }
+                                                break;case "btn_7":
+                                                if(P2P.isHost ==true){
+                                                    Jeu5.buttons[7].setText("X");
+                                                    Jeu5.buttons[7].setTextColor(Color.parseColor("#FFC34A"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+                                                } else if(P2P.isHost ==true){
+                                                    Jeu5.buttons[7].setText("0");
+                                                    Jeu5.buttons[7].setTextColor(Color.parseColor("#70FFEA"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+
+                                                }
+                                                break;case "btn_8":
+                                                if(P2P.isHost ==true){
+                                                    Jeu5.buttons[8].setText("X");
+                                                    Jeu5.buttons[8].setTextColor(Color.parseColor("#FFC34A"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+                                                } else if(P2P.isHost ==true){
+                                                    Jeu5.buttons[8].setText("0");
+                                                    Jeu5.buttons[8].setTextColor(Color.parseColor("#70FFEA"));
+                                                    Jeu5.gameState[Jeu5.gameStatePointer] = 0;
+                                                    Jeu5.tour ++;
+
+                                                }
+                                                break;
+
                                             case "ok":
                                                 //initialization of games
                                                 test.setText("j'ai reçu");

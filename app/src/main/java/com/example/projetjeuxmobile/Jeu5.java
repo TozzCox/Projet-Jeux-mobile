@@ -16,18 +16,23 @@ import java.nio.charset.StandardCharsets;
 public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
 
 
+    private static int[][] winningPositions;
     private TextView playerOneScore, playerTwoScore, playerStaus;
-    private Button[] buttons = new Button[9];
+    public static Button[] buttons = new Button[9];
     private Button resetGame;
+
+    //public static Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn0;
 
     private MediaPlayer mediaPlayer;
 
     private int playerOneScoreCount, playerTwoScoreCount, rountCount;
     boolean activePlayer;
 
-    public int tour = 0;
+    public static int tour = 0;
 
-    int [] gameState = {2,2,2,2,2,2,2,2,2};
+    public static  int gameStatePointer;
+
+    public static int [] gameState = {2,2,2,2,2,2,2,2,2};
 
     int [][] winningPositions ={
             {0,1,2}, {3,4,5}, {6,7,8},
@@ -45,6 +50,20 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
         playerOneScore = (TextView) findViewById(R.id.playerOneScore);
         playerTwoScore = (TextView) findViewById(R.id.playerTwoScore);
         playerStaus = (TextView) findViewById(R.id.playerStatus);
+
+        /*
+        btn0 = (Button) findViewById(R.id.btn_0);
+        btn1 = (Button) findViewById(R.id.btn_1);
+        btn2 = (Button) findViewById(R.id.btn_2);
+        btn3 = (Button) findViewById(R.id.btn_3);
+        btn4 = (Button) findViewById(R.id.btn_4);
+        btn5 = (Button) findViewById(R.id.btn_5);
+        btn6 = (Button) findViewById(R.id.btn_6);
+        btn7 = (Button) findViewById(R.id.btn_7);
+        btn8 = (Button) findViewById(R.id.btn_8);
+
+        */
+
 
         resetGame = (Button)  findViewById(R.id.reserGame);
         for (int i=0; i < buttons.length; i++){
@@ -66,7 +85,7 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
             return;
         }
         String buttonID = view.getResources().getResourceEntryName(view.getId());
-        int gameStatePointer = Integer.parseInt(buttonID.substring(buttonID.length()-1, buttonID.length())); //2
+        gameStatePointer = Integer.parseInt(buttonID.substring(buttonID.length()-1, buttonID.length())); //2
         Log.d("BoutonID:",buttonID);
 
         if (MainActivity.duel==false){
@@ -365,7 +384,7 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
-    public boolean checkWinner(){
+    public static boolean checkWinner(){
         boolean winnerResult = false;
 
         for(int [] winningPosition : winningPositions){
