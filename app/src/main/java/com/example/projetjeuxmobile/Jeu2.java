@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 
 import java.util.Random;
 
@@ -46,111 +47,32 @@ public class Jeu2 extends AppCompatActivity {
             @Override
             public void onFinish() {
                 if(MainActivity.duel){
-                    if(P2P.isHost){
+                    if(P2P.isHost) {
                         MainActivity.duelScoreServer += image.getScore();
-                        if (P2P.list_game.size()>0){
-                            String current_game = P2P.list_game.get(0);
-                            P2P.list_game.remove(current_game);
-
-
-
-                            Class activity = null;
-
-                            // Here, we are checking to see what the output of the random was
-                            switch(current_game) {
-                                case "1":
-
-                                    // E.g., if the output is 1, the activity we will open is ActivityOne.class
-                                    activity = Game1.class;
-                                    break;
-                                case "2":
-                                    activity = Game2.class;
-                                    break;
-                                case "3":
-                                    activity = Game3.class;
-                                    break;
-                                case "4":
-                                    activity = Jeu4.class;
-                                    break;
-                                case "5":
-                                    activity = Game5.class;
-                                    break;
-                                case "6":
-                                    activity = Jeu6.class;
-                                    break;
-                                default:
-                                    activity = MainActivity.class;
-                                    break;
-                            }
-                            // We use intents to start activities
-                            Intent intent = new Intent(getBaseContext(), activity);
-                            startActivity(intent);
-                        } else {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                        }
-                    }else{
-                        MainActivity.duelScoreClient += image.getScore();
-                        if (P2P.list_game.size()>0){
-                            String current_game = P2P.list_game.get(0);
-                            P2P.list_game.remove(current_game);
-
-
-
-                            Class activity = null;
-
-                            // Here, we are checking to see what the output of the random was
-                            switch(current_game) {
-                                case "1":
-
-                                    // E.g., if the output is 1, the activity we will open is ActivityOne.class
-                                    activity = Game1.class;
-                                    break;
-                                case "2":
-                                    activity = Game2.class;
-                                    break;
-                                case "3":
-                                    activity = Game3.class;
-                                    break;
-                                case "4":
-                                    activity = Jeu4.class;
-                                    break;
-                                case "5":
-                                    activity = Game5.class;
-                                    break;
-                                case "6":
-                                    activity = Jeu6.class;
-                                    break;
-                                default:
-                                    activity = MainActivity.class;
-                                    break;
-                            }
-                            // We use intents to start activities
-                            Intent intentActivity = new Intent(getBaseContext(), activity);
-                            startActivity(intentActivity);
-                             if(P2P.list_game.size() == 0) {
-                                 if (P2P.isHost) {
-                                     //P2P.serverClass.write("termine".getBytes());
-                                 } else {
-                                     //P2P.clientClass.write("termine".getBytes());
-                                 }
-                                 Intent intentScore = new Intent(getApplicationContext(), Scrore.class);
-                                 startActivity(intentScore);
-                             }
                     }else {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                        }
+                        MainActivity.duelScoreClient += image.getScore();
                     }
+
+                    if (P2P.list_game.size()>0){
+
+                        for(int i = 0; i<3; i++){
+                            Log.d("list_game" , ""+ P2P.list_game.get(i));
+                        }
+
+                        // We use intents to start activities
+                        Intent intentActivity = new Intent(getBaseContext(), P2P.launchActivity());
+                        startActivity(intentActivity);
+
+                    }else {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+
                 }else {
                     Intent intent = new Intent(Jeu2.this, MainActivity.class);
                     startActivity(intent);
                 }
-
-
             }
         }.start();
     }
-
-
 }

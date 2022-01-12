@@ -79,9 +79,30 @@ public class Jeu6 extends AppCompatActivity {
                                     value = rdm.nextInt(4);
                                     arrow.setRotation(value*90);
                                     scoreDisplay.setText("Score : " + score);
-                                    if(score==20){
-                                        Intent intent = new Intent(Jeu6.this, MainActivity.class);
-                                        startActivity(intent);
+                                    if(score>=15){
+                                        //finish
+                                        if(MainActivity.duel) {
+                                            if (P2P.isHost) {
+                                                P2P.serverClass.write("stop".getBytes());
+                                            } else {
+                                                P2P.clientClass.write("stop".getBytes());
+                                            }
+
+                                            if (P2P.list_game.size()>0){
+
+                                                for(int i = 0; i<3; i++){
+                                                    Log.d("list_game" , ""+ P2P.list_game.get(i));
+                                                }
+
+                                                // We use intents to start activities
+                                                Intent intentActivity = new Intent(getBaseContext(), P2P.launchActivity());
+                                                startActivity(intentActivity);
+                                            }
+
+                                        } else {
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            startActivity(intent);
+                                        }
                                     }
                                     return true;
                                 }
@@ -105,66 +126,21 @@ public class Jeu6 extends AppCompatActivity {
                                     value = rdm.nextInt(4);
                                     arrow.setRotation(value*90);
                                     scoreDisplay.setText("Score : " + score);
-                                    if(score==20){
+                                    if(score>=15){
                                         //finish
                                         if(MainActivity.duel) {
-                                            ExecutorService executor = Executors.newSingleThreadExecutor();
-                                            executor.execute(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    if (P2P.isHost) {
-                                                        P2P.serverClass.write("stop".getBytes());
-                                                    } else {
-                                                        P2P.clientClass.write("stop".getBytes());
-                                                    }
+                                            if (P2P.isHost) {
+                                                P2P.serverClass.write("stop".getBytes());
+                                            } else {
+                                                P2P.clientClass.write("stop".getBytes());
+                                            }
 
-                                                    if (P2P.list_game.size()>0){
-                                                        String current_game = P2P.list_game.get(0);
-                                                        P2P.list_game.remove(current_game);
+                                            if (P2P.list_game.size()>0){
 
-
-                                                        Class activity = null;
-
-                                                        // Here, we are checking to see what the output of the random was
-                                                        switch(current_game) {
-                                                            case "1":
-                                                                // E.g., if the output is 1, the activity we will open is ActivityOne.class
-                                                                activity = Game1.class;
-                                                                break;
-                                                            case "2":
-                                                                activity = Game2.class;
-                                                                break;
-                                                            case "3":
-                                                                activity = Game3.class;
-                                                                break;
-                                                            case "4":
-                                                                activity = Jeu4.class;
-                                                                break;
-                                                            case "5":
-                                                                activity = Game5.class;
-                                                                break;
-                                                            case "6":
-                                                                activity = Jeu6.class;
-                                                                break;
-                                                            default:
-                                                                activity = MainActivity.class;
-                                                                break;
-                                                        }
-                                                        // We use intents to start activities
-                                                        Intent intentActivity = new Intent(getBaseContext(), activity);
-                                                        startActivity(intentActivity);
-                                                        if(P2P.list_game.size() == 0) {
-                                                            if (P2P.isHost) {
-                                                                //P2P.serverClass.write("termine".getBytes());
-                                                            } else {
-                                                                //P2P.clientClass.write("termine".getBytes());
-                                                            }
-                                                            Intent intentScore = new Intent(getBaseContext(), Scrore.class);
-                                                            startActivity(intentScore);
-                                                        }
-                                                    }
-                                                }
-                                            });
+                                                // We use intents to start activities
+                                                Intent intentActivity = new Intent(getBaseContext(), P2P.launchActivity());
+                                                startActivity(intentActivity);
+                                            }
                                         } else {
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             startActivity(intent);

@@ -23,6 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetJeuxMobile">
         <activity
+            android:name=".Score"
+            android:exported="false" />
+        <activity
             android:name=".Game5"
             android:exported="false" />
         <activity
