@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
 
 
-    private static int[][] winningPositions;
+
     private TextView playerOneScore, playerTwoScore, playerStaus;
     public static Button[] buttons = new Button[9];
     private Button resetGame;
@@ -34,7 +34,7 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
 
     public static int [] gameState = {2,2,2,2,2,2,2,2,2};
 
-    int [][] winningPositions ={
+    private static int [][] winningPositions ={
             {0,1,2}, {3,4,5}, {6,7,8},
             {0,3,6}, {1,4,7}, {2,5,8},
             {0,4,8}, {2,4,6},
@@ -194,7 +194,8 @@ public class Jeu5 extends AppCompatActivity implements View.OnClickListener {
                 }
 
             }
-        } else {
+        }
+        else {
             if (P2P.isHost ==true && tour%2 ==0){
                 P2P.serverClass.write(buttonID.getBytes());
                 switch(buttonID) {
