@@ -44,7 +44,8 @@ public class Jeu2 extends AppCompatActivity {
     }
 
     private void timer() {
-        countDownTimer = new CountDownTimer(20000, 1000) {
+
+        countDownTimer = new CountDownTimer(5000, 1000) {
             @Override
             public void onTick(long l) {}
 
@@ -53,8 +54,10 @@ public class Jeu2 extends AppCompatActivity {
                 if(MainActivity.duel){
                     if(P2P.isHost) {
                         MainActivity.duelScoreServer += image.getScore();
-
+                        //Score1.scoreJoueur1.setText(MainActivity.duelScoreServer);
                         if (P2P.list_game.size()>0){
+
+                            Log.d("LaunchActivity" , ""+ P2P.list_game.get(0));
                             Log.d("scoreServer" , ""+ MainActivity.duelScoreServer);
                             Log.d("scoreClient" , ""+ MainActivity.duelScoreClient);
 
@@ -62,50 +65,44 @@ public class Jeu2 extends AppCompatActivity {
                             Intent intentActivity = new Intent(getBaseContext(), P2P.launchActivity());
                             startActivity(intentActivity);
 
-                        }else {
+                        }/*else {
+
+                            Log.d("LaunchActivity1" , ""+ P2P.list_game.get(0));
                             Intent intent = new Intent(getBaseContext(), Score.class);
                             startActivity(intent);
-                        }
-
-                        ExecutorService executor = Executors.newSingleThreadExecutor();
+                        }*/
+                        /*ExecutorService executor = Executors.newSingleThreadExecutor();
                         Handler handler = new Handler(Looper.getMainLooper());
 
                         executor.execute(new Runnable() {
                             @Override
                             public void run() {
-                                String scoreServer = "termine:"+MainActivity.duelScoreServer;
+                                String scoreServer = "termine:" + MainActivity.duelScoreServer;
                                 P2P.serverClass.write(scoreServer.getBytes());
-                            }});
-
+                            }
+                        });*/
                     }else {
                         MainActivity.duelScoreClient += image.getScore();
-                        if (P2P.list_game.size()>0){
-                            Log.d("list_game_size" , ""+ P2P.list_game.size());
+                        //Score1.scoreJoueur2.setText(MainActivity.duelScoreClient);
+                        if (P2P.list_game.size()>0 ){
+                            Log.d("LaunchActivity" , ""+ P2P.list_game.get(0));
 
                             // We use intents to start activities
                             Intent intentActivity = new Intent(getBaseContext(), P2P.launchActivity());
                             startActivity(intentActivity);
+                        }/*else {
 
-                        }else {
+                            Log.d("LaunchActivity1" , ""+ P2P.list_game.get(0));
                             Intent intent = new Intent(getBaseContext(), Score.class);
                             startActivity(intent);
                         }
-
-                        ExecutorService executor = Executors.newSingleThreadExecutor();
-                        Handler handler = new Handler(Looper.getMainLooper());
-
-                        executor.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                String scoreClient = "termine:"+MainActivity.duelScoreClient;
-                                P2P.clientClass.write(scoreClient.getBytes());
-                            }});
+*/
                     }
 
-
-
                 }else {
-                    Intent intent = new Intent(Jeu2.this, Score.class);
+
+                    Log.d("LaunchActivity2" , ""+ MainActivity.duel);
+                    Intent intent = new Intent(Jeu2.this, MainActivity.class);
                     startActivity(intent);
                 }
             }

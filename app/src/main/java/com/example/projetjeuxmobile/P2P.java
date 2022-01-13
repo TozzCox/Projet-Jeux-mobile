@@ -1,5 +1,6 @@
 package com.example.projetjeuxmobile;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -139,8 +140,9 @@ public class P2P extends AppCompatActivity {
                     public void run() {
                         if(isHost){
                             list_game.add("3");
-                            //list_game.add("4");
+                            list_game.add("4");
                             list_game.add("2");
+                            list_game.add("0");
                             serverClass.write("start".getBytes());
                             Intent intent = new Intent(getBaseContext(), launchActivity());
                             startActivity(intent);
@@ -283,16 +285,14 @@ public class P2P extends AppCompatActivity {
                                                 Intent intent = new Intent(P2P.this, launchActivity());
                                                 startActivity(intent);
                                                 break;
-                                            case "termine":
-                                                Score.scoreJoueur2.setText("Joueur 2 : " + MainActivity.duelScoreClient);
-                                                break;
                                         }
 
                                         if(newTempMsg[0].equals("termine")){
+
+                                            Log.d("LaunchActivityScore",""+newTempMsg[1]);
                                             MainActivity.duelScoreClient = Integer.parseInt(newTempMsg[1]);
-                                            Log.d("tempMsg",""+newTempMsg[1]);
-                                            //Score.playerOneScore.setText("Joueur 11 : " + MainActivity.duelScoreServer );
-                                            Score.playerTwoScrore.setText("Joueur 22 : " + newTempMsg[1] );
+                                            //Score1.scoreJoueur1.setText(MainActivity.duelScoreServer );
+                                            //Score1.scoreJoueur2.setText(newTempMsg[1]);
                                             //comparer le score reçu avec le score du serveur
                                         }
 
@@ -384,14 +384,17 @@ public class P2P extends AppCompatActivity {
                                             startActivity(intent);
                                         }else if(tempMsg.equals("start")){
                                             list_game.add("3");
-                                            //list_game.add("4");
+                                            list_game.add("4");
                                             list_game.add("2");
+                                            list_game.add("0");
                                             Intent intent = new Intent(getBaseContext(), launchActivity());
                                             startActivity(intent);
                                         }else if(newTempMsg[0].equals("termine")){
+                                            Log.d("LaunchActivity", newTempMsg[1]+"");
                                             MainActivity.duelScoreServer = Integer.parseInt(newTempMsg[1]);
-                                            Log.d("tempMsg", newTempMsg[1]+"");
-                                            Score.playerOneScore.setText("Joueur 11 : " + newTempMsg[1] );
+                                            //Score1.scoreJoueur1.setText("ok");
+                                            //Score1.scoreJoueur1.setText(newTempMsg[1]);
+                                            //Score1.scoreJoueur2.setText(MainActivity.duelScoreClient );
                                             //Score.playerTwoScrore.setText("Joueur 22 : " + MainActivity.duelScoreClient );
                                             //comparer le score reçu avec le score du client
                                         }
@@ -611,44 +614,49 @@ public class P2P extends AppCompatActivity {
 
     public static Class launchActivity(){
 
-
+        Log.d("LaunchActivity", list_game.size() + " " + list_game.get(0));
         Class activity = null;
         String current_game = list_game.get(0);
 
-        if(list_game.size() == 1){
+        /*if(list_game.size() != 1){
             list_game.add("0");
-        }
+        }*/
 
-        Log.d("launchSizeBefore", list_game.size() + " " + list_game.get(0));
-        list_game.remove(0);
-        Log.d("launchSizeAfter", list_game.size() + " " + list_game.get(0));
+        if(list_game.size() != 1) {
+            Log.d("launchSizeBefore", list_game.size() + " " + list_game.get(0));
+            list_game.remove(0);
+            Log.d("launchSizeAfter", list_game.size() + " " + list_game.get(0));
 
-        switch (current_game) {
-            case "0":
-                activity = Score.class;
-                break;
-            case "1":
-                // E.g., if the output is 1, the activity we will open is ActivityOne.class
-                activity = Game1.class;
-                break;
-            case "2":
-                activity = Game2.class;
-                break;
-            case "3":
-                activity = Game3.class;
-                break;
-            case "4":
-                activity = Jeu4.class;
-                break;
-            case "5":
-                activity = Game5.class;
-                break;
-            case "6":
-                activity = Jeu6.class;
-                break;
-            default:
-                activity = Score.class;
-                break;
+            switch (current_game) {
+                case "0":
+                    //activity = MainActivity.class;
+                    break;
+                case "1":
+                    // E.g., if the output is 1, the activity we will open is ActivityOne.class
+                    activity = Game1.class;
+                    break;
+                case "2":
+                    activity = Game2.class;
+                    break;
+                case "3":
+                    activity = Game3.class;
+                    break;
+                case "4":
+                    activity = Jeu4.class;
+                    break;
+                case "5":
+                    activity = Game5.class;
+                    break;
+                case "6":
+                    activity = Jeu6.class;
+                    break;
+                default:
+                    activity = Score.class;
+                    break;
+            }
+        }else{
+            Log.d("LaunchActivity", "je suis dans le score");
+            activity = Score1.class;
         }
 
         return activity;

@@ -11,8 +11,11 @@ import android.widget.TextView;
 
 public class Score extends AppCompatActivity {
 
-    public static TextView playerOneScore, playerTwoScrore;
+    //TextView playerOneScore, playerTwoScrore;
     Button menu;
+
+    public static boolean finalJoueur1 = false;
+    public static boolean finalJoueur2 = false;
 
     public static TextView scoreJoueur1;
     public static TextView scoreJoueur2;
@@ -23,17 +26,13 @@ public class Score extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
 
-        scoreJoueur1 = findViewById(R.id.Joueur1);
-        scoreJoueur2 = findViewById(R.id.Joueur2);
+        scoreJoueur1 = findViewById(R.id.scoreJoueur1);
+        scoreJoueur2 = findViewById(R.id.scoreJoueur2);
 
-        scoreJoueur1.setText("Joueur 1 : " + MainActivity.duelScoreServer);
+        scoreJoueur1.setText(MainActivity.duelScoreServer);
+        scoreJoueur2.setText(MainActivity.duelScoreClient);
 
-        playerOneScore = (TextView) findViewById(R.id.Joueur1);
-        playerTwoScrore = (TextView) findViewById(R.id.Joueur2);
         menu = (Button) findViewById(R.id.menu);
-
-        playerOneScore.setText("Joueur 1 : " + MainActivity.duelScoreServer );
-        playerTwoScrore.setText("Joueur 2 : " + MainActivity.duelScoreClient);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override

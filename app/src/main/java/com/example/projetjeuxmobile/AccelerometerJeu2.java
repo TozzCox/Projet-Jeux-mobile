@@ -79,7 +79,7 @@ public class AccelerometerJeu2 extends View implements SensorEventListener {
 
         previousTime = 200;
         //lancer le chrono qu'une seule fois
-        countDownTimer = new CountDownTimer(20000, 10) {
+        countDownTimer = new CountDownTimer(5000, 10) {
             @Override
             public void onTick(long l) {
                 if(l/1000>=10){
