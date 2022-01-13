@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 duel = false;
-                Intent intent = new Intent(MainActivity.this, Score.class);
+                Intent intent = new Intent(MainActivity.this, Jeu6.class);
                 startActivity(intent);
             }
         });

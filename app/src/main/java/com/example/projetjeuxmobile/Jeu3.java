@@ -145,7 +145,7 @@ public class Jeu3 extends AppCompatActivity {
     }
 
     private void timer() {
-        countDownTimer = new CountDownTimer(10000, 1000) {
+        countDownTimer = new CountDownTimer(20000, 1000) {
             @Override
             public void onTick(long l) {
                 if(l/1000>=10){

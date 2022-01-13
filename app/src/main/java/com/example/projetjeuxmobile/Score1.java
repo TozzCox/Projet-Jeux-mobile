@@ -44,7 +44,7 @@ public class Score1 extends AppCompatActivity {
         winner = (ImageView) findViewById(R.id.winner);
         loser = (ImageView) findViewById(R.id.loser);
 
-        this.mediaPlayerWinner = MediaPlayer.create(getApplicationContext(), R.raw.winner2);
+        this.mediaPlayerWinner = MediaPlayer.create(getApplicationContext(), R.raw.winner1);
         this.mediaPlayerLoser = MediaPlayer.create(getApplicationContext(), R.raw.loser2);
 
         scoreJoueur1 = findViewById(R.id.scoreJoueur1);

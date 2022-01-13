@@ -45,7 +45,7 @@ public class Jeu2 extends AppCompatActivity {
 
     private void timer() {
 
-        countDownTimer = new CountDownTimer(5000, 1000) {
+        countDownTimer = new CountDownTimer(20000, 1000) {
             @Override
             public void onTick(long l) {}
 

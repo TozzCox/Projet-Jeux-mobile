@@ -131,7 +131,7 @@ public class P2P extends AppCompatActivity {
         });
 
         playButton.setOnClickListener(new View.OnClickListener() {
-            //String list = "342"; //chooseActivity();
+            //String list = chooseActivity();
             @Override
             public void onClick(View view) {
                 ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -362,24 +362,28 @@ public class P2P extends AppCompatActivity {
                                             list_game.add("3");
                                             list_game.add("4");
                                             list_game.add("1");
+                                            list_game.add("0");
                                             Intent intent = new Intent(getBaseContext(), launchActivity());
                                             startActivity(intent);
                                         }else if(tempMsg.equals("342")){
                                             list_game.add("3");
                                             list_game.add("4");
                                             list_game.add("2");
+                                            list_game.add("0");
                                             Intent intent = new Intent(getBaseContext(), launchActivity());
                                             startActivity(intent);
                                         }else if(tempMsg.equals("641")){
                                             list_game.add("6");
                                             list_game.add("4");
                                             list_game.add("1");
+                                            list_game.add("0");
                                             Intent intent = new Intent(getBaseContext(), launchActivity());
                                             startActivity(intent);
                                         }else if(tempMsg.equals("642")){
                                             list_game.add("6");
                                             list_game.add("4");
                                             list_game.add("2");
+                                            list_game.add("0");
                                             Intent intent = new Intent(getBaseContext(), launchActivity());
                                             startActivity(intent);
                                         }else if(tempMsg.equals("start")){
@@ -606,6 +610,7 @@ public class P2P extends AppCompatActivity {
         list_game.add(tactile_game);
         list_game.add("4"); //quiz
         list_game.add(capteur_game);
+        list_game.add("0");
         //Log.d("liste des jeux ", list_game.get(0) + " " + list_game.get(1) + list_game.get(2));
 
         Log.d("listejeux",list_game.get(0)+list_game.get(1)+list_game.get(2));
@@ -651,7 +656,7 @@ public class P2P extends AppCompatActivity {
                     activity = Jeu6.class;
                     break;
                 default:
-                    activity = Score.class;
+                    activity = Score1.class;
                     break;
             }
         }else{
