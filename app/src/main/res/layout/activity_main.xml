@@ -47,7 +47,7 @@
         android:layout_marginTop="60dp"
         android:text="Accueil"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/purple_700"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,5 +114,15 @@
             android:text="Jeu 6"
             android:textColor="@color/black" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/entrainement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entrainement"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="95dp"
+        tools:layout_editor_absoluteY="540dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

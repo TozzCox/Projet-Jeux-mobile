@@ -21,18 +21,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Questions: 1/n"
-            android:textColor="@color/black"
-            android:textSize="17sp"/>
+            android:textColor="@color/purple_700"
+            android:textSize="17sp" />
 
         <TextView
+            android:id="@+id/texScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Score: 0"
             android:layout_below="@+id/textQuestionNo"
-            android:textColor="@color/black"
-            android:textSize="17sp"
             android:layout_marginTop="5dp"
-            android:id="@+id/texScore"/>
+            android:text="Score: 0"
+            android:textColor="@color/purple_700"
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/textTimer"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:text="00:20"
-            android:textColor="@color/black"
+            android:textColor="@color/purple_700"
             android:textSize="37sp" />
 
         <TextView
